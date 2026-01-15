@@ -501,6 +501,77 @@ const warmupDictionary = {
     }
 };
 
+const cardioDictionary = {
+    "Cardio": {
+        title: "🏠 CARDIO W DOMU - Szczegółowy Plan (bez sprzętu, bez wychodzenia)",
+        why: "Spalanie kalorii bez wychodzenia z domu. Wszystkie ćwiczenia bezpieczne dla stawu skokowego i kolana. Nie wymagają żadnego sprzętu. Możesz robić w małym pomieszczeniu.",
+        exercises: [
+            {
+                name: "1. MARSZ W MIEJSCU (NAJŁATWIEJSZE) ⭐",
+                description: "Maszerujesz w miejscu, podnosząc kolana. Bezpieczne dla stawu skokowego (nie skaczesz!).",
+                howTo: [
+                    "Stań prosto, stopy na szerokość bioder",
+                    "POWOLI podnoś kolana (naprzemiennie - lewa, prawa, lewa, prawa)",
+                    "Ręce wymachuj naturalnie (jak przy chodzeniu)",
+                    "NIE skacz! - tylko podnoś kolana",
+                    "Tempo: Umiarkowane (możesz rozmawiać, ale z lekką zadyszką)"
+                ],
+                time: "5-10 minut ciągłego marszu",
+                intensity: "Umiarkowana (60-70% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego! Możesz robić w małym pomieszczeniu. Zacznij od 5 minut, zwiększaj do 10-15 minut."
+            },
+            {
+                name: "2. MARSZ Z WYMACHEM RAMION",
+                description: "Marsz w miejscu + intensywniejsze wymachy ramion. Więcej spalania kalorii niż zwykły marsz.",
+                howTo: [
+                    "Stań prosto, stopy na szerokość bioder",
+                    "Podnoś kolana (naprzemiennie)",
+                    "Intensywnie wymachuj ramionami: gdy podnosisz lewe kolano, wymachuj prawym ramieniem do góry",
+                    "Tempo: Szybsze niż zwykły marsz"
+                ],
+                time: "5-10 minut",
+                intensity: "Umiarkowana do wyższej (70-80% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego! Więcej spalania kalorii. Trenuje też górną część ciała."
+            },
+            {
+                name: "3. MARSZ Z PODNOSZENIEM KOLAN (WYSOKIE KOLANA)",
+                description: "Marsz w miejscu, ale podnosisz kolana wyżej. Więcej intensywności, ale nadal bezpieczne.",
+                howTo: [
+                    "Stań prosto",
+                    "Podnoś kolana wyżej (do wysokości bioder lub wyżej)",
+                    "Ręce wymachuj naturalnie",
+                    "NIE skacz! - tylko podnoś kolana wyżej",
+                    "Tempo: Umiarkowane do szybszego"
+                ],
+                time: "3-5 minut (możesz robić na przemian z zwykłym marszem)",
+                intensity: "Wyższa (75-85% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego! Jeśli boli kolano, zmniejsz wysokość podnoszenia. Możesz robić na przemian: 1 minuta wysokie kolana, 2 minuty zwykły marsz."
+            }
+        ],
+        plans: [
+            {
+                name: "Wersja Podstawowa (10 minut)",
+                exercises: [
+                    "Marsz w miejscu: 5 minut",
+                    "Marsz z wymachem ramion: 3 minuty",
+                    "Marsz w miejscu (schłodzenie): 2 minuty"
+                ]
+            },
+            {
+                name: "Wersja Średnia (15 minut)",
+                exercises: [
+                    "Marsz w miejscu: 3 minuty (rozgrzewka)",
+                    "Marsz z wymachem ramion: 4 minuty",
+                    "Marsz z wysokimi kolanami: 2 minuty (na przemian: 30s wysokie, 1min zwykły)",
+                    "Marsz z podnoszeniem nóg do tyłu: 3 minuty",
+                    "Marsz w miejscu (schłodzenie): 3 minuty"
+                ]
+            }
+        ],
+        notes: "Wszystkie ćwiczenia bezpieczne dla stawu skokowego i kolana. Nie wymagają żadnego sprzętu. Możesz robić w małym pomieszczeniu. Zacznij od wersji podstawowej (10 min), stopniowo zwiększaj czas."
+    }
+};
+
 const stretchingDictionary = {
     "Rozciąganie": {
         title: "🧘 ROZCIĄGANIE - Szczegółowy Plan (5 minut)",
@@ -640,6 +711,21 @@ function displayWorkout() {
 
     let html = `
         <div class="workout-section">
+            <div class="section-title flex" style="cursor: pointer;" onclick="togglePlanInfo()">
+                <span>ℹ️ Informacje o planie</span>
+                <span id="plan-info-icon">▼</span>
+            </div>
+            <div id="plan-info-content" style="display: none;">
+                <div class="info-box">
+                    <strong>Cel:</strong> ${plan.goal}<br>
+                    <strong>Sprzęt:</strong> ${plan.equipment}<br>
+                    <strong>Ograniczenia:</strong> ${addTermLinks(plan.limitations)}<br>
+                    <strong>UNIKAJ:</strong> ${plan.avoid}
+                </div>
+            </div>
+        </div>
+
+        <div class="workout-section">
             <div class="section-title flex">
                 <span>🔥 Rozgrzewka: ${addTermLinks(day.warmup)}</span>
                 <a class="exercise-link" onclick="showWarmupDetails()">📖 Jak wykonać?</a>
@@ -675,7 +761,10 @@ function displayWorkout() {
         </div>
 
         <div class="workout-section">
-            <div class="section-title">🏃 Cardio: ${day.cardio}</div>
+            <div class="section-title flex">
+                <span>🏃 Cardio: ${day.cardio}</span>
+                <a class="exercise-link" onclick="showCardioDetails()">📖 Jak wykonać?</a>
+            </div>
         </div>
 
         <div class="workout-section">
@@ -686,19 +775,92 @@ function displayWorkout() {
         </div>
     `;
 
-    html += `
-        <div class="workout-section">
-            <div class="section-title">ℹ️ Informacje o planie</div>
-            <div class="info-box">
-                <strong>Cel:</strong> ${plan.goal}<br>
-                <strong>Sprzęt:</strong> ${plan.equipment}<br>
-                <strong>Ograniczenia:</strong> ${addTermLinks(plan.limitations)}<br>
-                <strong>UNIKAJ:</strong> ${plan.avoid}
+    content.innerHTML = html;
+}
+
+function togglePlanInfo() {
+    const content = document.getElementById('plan-info-content');
+    const icon = document.getElementById('plan-info-icon');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▲';
+    } else {
+        content.style.display = 'none';
+        icon.textContent = '▼';
+    }
+}
+
+function showCardioDetails() {
+    const cardio = cardioDictionary["Cardio"];
+    
+    const modal = document.getElementById('exerciseModal');
+    const modalBody = document.getElementById('modal-body');
+
+    let html = `
+        <h2 class="modal-title">${cardio.title}</h2>
+        
+        <div class="info-box">
+            <h3>Dlaczego to ważne:</h3>
+            <p>${cardio.why}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>📋 Ćwiczenia cardio w domu:</h3>
+    `;
+
+    cardio.exercises.forEach(ex => {
+        html += `
+            <div style="margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                <h4 style="color: #333; margin-bottom: 10px;">${ex.name}</h4>
+                <p style="color: #666; margin-bottom: 10px;">${ex.description}</p>
+                <strong>Jak wykonać:</strong>
+                <ol style="margin-left: 20px; margin-top: 5px;">
+        `;
+        ex.howTo.forEach(step => {
+            html += `<li style="margin-bottom: 5px;">${step}</li>`;
+        });
+        html += `
+                </ol>
+                <p style="margin-top: 10px;"><strong>Czas:</strong> ${ex.time}</p>
+                <p><strong>Intensywność:</strong> ${ex.intensity}</p>
+                <p style="color: #27ae60; margin-top: 10px;"><strong>Uwagi:</strong> ${ex.notes}</p>
             </div>
+        `;
+    });
+
+    html += `
+        </div>
+
+        <div class="modal-section">
+            <h3>📊 Plany cardio:</h3>
+    `;
+
+    cardio.plans.forEach(plan => {
+        html += `
+            <div style="margin-bottom: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
+                <h4 style="color: #333; margin-bottom: 10px;">${plan.name}</h4>
+                <ol style="margin-left: 20px;">
+        `;
+        plan.exercises.forEach(ex => {
+            html += `<li style="margin-bottom: 5px;">${ex}</li>`;
+        });
+        html += `
+                </ol>
+            </div>
+        `;
+    });
+
+    html += `
+        </div>
+
+        <div class="info-box">
+            <h3>Uwagi:</h3>
+            <p>${cardio.notes}</p>
         </div>
     `;
 
-    content.innerHTML = html;
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
 }
 
 function showExerciseDetails(exerciseName) {
