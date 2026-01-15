@@ -473,26 +473,43 @@ const warmupDictionary = {
             {
                 name: "Część 2: Mobilizacja stawów (3-4 minuty)",
                 exercises: [
-                    "Krążenia ramion (do przodu) - 2x20 każde ramię osobno (stań prosto, kręć ramieniem w pełnym zakresie, tempo wolne)",
-                    "Krążenia ramion (do tyłu) - 2x20 każde ramię (to samo, ale w przeciwną stronę)",
-                    "Krążenia ramion (oba jednocześnie) - 2x15 do przodu i do tyłu (oba ramiona razem, szerokie kręgi)",
-                    "Rotacje tułowia - 2x10 w każdą stronę (stopy na szerokość bioder, ręce na biodrach, skręty tułowia, UWAGA: Nie skręcaj zbyt mocno)",
-                    "Wymachy ramion (bokiem) - 2x15 (ramiona wyprostowane, wymachy na boki jak skrzydła)"
+                    "A. Górna część ciała:",
+                    "• Krążenia ramion (do przodu) - 2x20 każde ramię osobno (stań prosto, kręć ramieniem w pełnym zakresie, tempo wolne)",
+                    "• Krążenia ramion (do tyłu) - 2x20 każde ramię (to samo, ale w przeciwną stronę)",
+                    "• Krążenia ramion (oba jednocześnie) - 2x15 do przodu i do tyłu (oba ramiona razem, szerokie kręgi)",
+                    "• Rotacje tułowia - 2x10 w każdą stronę (stopy na szerokość bioder, ręce na biodrach, skręty tułowia, UWAGA: Nie skręcaj zbyt mocno)",
+                    "• Wymachy ramion (bokiem) - 2x15 (ramiona wyprostowane, wymachy na boki jak skrzydła)",
+                    "",
+                    "B. Dolna część ciała (tylko dla treningów nóg):",
+                    "• Krążenia bioder - 2x15 w każdą stronę (ręce na biodrach, kręcenie biodrami w kółko, UWAGA: Płynne ruchy, bez szarpania)",
+                    "• Wymachy nogą do przodu (bez obciążenia) - 2x10 każda noga (trzymaj się czegoś dla równowagi, wymachuj nogą do przodu, UWAGA: Krótki zakres, nie podnoś zbyt wysoko - bezpieczne dla kolana)",
+                    "• Wymachy nogą do boku - 2x10 każda noga (wymach nogą na bok, trzymaj się dla równowagi)"
                 ]
             },
             {
                 name: "Część 3: Dynamiczne rozciąganie (2-3 minuty)",
                 exercises: [
-                    "Rozciąganie klatki piersiowej (w drzwiach/przy ścianie) - 2x30 sekund (oprzyj przedramię o framugę/ścianę, delikatnie skręć tułów, poczuj rozciąganie, UWAGA: Nie szarp)",
-                    "Rozciąganie tricepsów - 2x20 sekund każde ramię (zegnij ramię, dłoń za głową, drugą ręką pociągnij za łokieć)",
-                    "Rozciąganie barków (przez klatkę) - 2x20 sekund każde ramię (wyprostuj ramię przed sobą, drugą ręką pociągnij za łokieć w kierunku klatki)"
+                    "A. Dla treningów górnej części ciała:",
+                    "• Rozciąganie klatki piersiowej (w drzwiach/przy ścianie) - 2x30 sekund (oprzyj przedramię o framugę/ścianę, delikatnie skręć tułów, poczuj rozciąganie, UWAGA: Nie szarp)",
+                    "• Rozciąganie tricepsów - 2x20 sekund każde ramię (zegnij ramię, dłoń za głową, drugą ręką pociągnij za łokieć)",
+                    "• Rozciąganie barków (przez klatkę) - 2x20 sekund każde ramię (wyprostuj ramię przed sobą, drugą ręką pociągnij za łokieć w kierunku klatki)",
+                    "",
+                    "B. Dla treningów dolnej części ciała:",
+                    "• Rozciąganie mięśni czworogłowych (stojąc) - 2x30 sekund każda noga (stań na jednej nodze, trzymaj się dla równowagi, zegnij drugą nogę, chwyć za stopę, delikatnie pociągnij do pośladka, UWAGA: Nie ciągnij zbyt mocno, szczególnie lewa noga - kolano!)",
+                    "• Rozciąganie mięśni tylnych uda (stojąc) - 2x30 sekund każda noga (postaw jedną nogę na podwyższeniu - krzesło, łóżko, delikatnie pochyl się do przodu, UWAGA: Nie schylaj się zbyt nisko - bezpieczne dla kolana)",
+                    "• Rozciąganie pośladków (siedząc) - 2x30 sekund każda strona (jedna noga zgięta, stopa na kolanie drugiej nogi, delikatnie pociągnij kolano do klatki)"
                 ]
             },
             {
                 name: "Część 4: Aktywacja mięśni (1-2 minuty)",
                 exercises: [
-                    "Dla treningów górnej części: Pompki na kolanach (lekko) - 1x10-15 (tylko rozgrzewka, nie do zmęczenia!)",
-                    "Dla treningów dolnej części: Unoszenie bioder (bez ciężaru) - 1x15 (tylko rozgrzewka), Lekkie wykroki (bez ciężaru) - 1x5 każda noga (UWAGA: Płytkie, bez głębokiego zgięcia!)"
+                    "Dla treningów górnej części:",
+                    "• Pompki na kolanach (lekko) - 1x10-15 (tylko rozgrzewka, nie do zmęczenia!)",
+                    "• Lekkie wymachy hantlami - weź lekkie hantle (5-10kg), wykonaj 10-15 wymachów przed sobą",
+                    "",
+                    "Dla treningów dolnej części:",
+                    "• Unoszenie bioder (bez ciężaru) - 1x15 (tylko rozgrzewka)",
+                    "• Lekkie wykroki (bez ciężaru) - 1x5 każda noga (UWAGA: Płytkie, bez głębokiego zgięcia!)"
                 ]
             }
         ],
@@ -546,6 +563,65 @@ const cardioDictionary = {
                 time: "3-5 minut (możesz robić na przemian z zwykłym marszem)",
                 intensity: "Wyższa (75-85% maksymalnego tętna)",
                 notes: "Bezpieczne dla stawu skokowego! Jeśli boli kolano, zmniejsz wysokość podnoszenia. Możesz robić na przemian: 1 minuta wysokie kolana, 2 minuty zwykły marsz."
+            },
+            {
+                name: "4. MARSZ Z WYKROKAMI W MIEJSCU (PŁYTKIE)",
+                description: "Robisz wykroki w miejscu (ale płytkie - bezpieczne dla kolana!). Więcej intensywności, trenuje też nogi.",
+                howTo: [
+                    "Stań prosto",
+                    "PŁYTKI wykrok do przodu jedną nogą (krótki krok!)",
+                    "Wróć do pozycji startowej",
+                    "Zmień nogę",
+                    "WAŻNE: Płytkie wykroki - nie schodź zbyt nisko!",
+                    "Tempo: Wolne do umiarkowanego"
+                ],
+                time: "3-5 minut (możesz robić na przemian z marszem)",
+                intensity: "Umiarkowana do wyższej (70-80% maksymalnego tętna)",
+                notes: "BARDZO WAŻNE: Płytkie wykroki - nie obciążaj zbyt mocno lewego kolana! Jeśli boli kolano, pomiń to ćwiczenie. Możesz robić na przemian: 30 sekund wykroki, 2 minuty marsz."
+            },
+            {
+                name: "5. MARSZ Z PODNOSZENIEM NÓG DO TYŁU (KICKBACKS)",
+                description: "Marsz w miejscu, ale podnosisz nogi do tyłu (do pośladków). Trenuje tył nóg i pośladki.",
+                howTo: [
+                    "Stań prosto",
+                    "Podnoś jedną nogę do tyłu (do pośladka)",
+                    "Zmień nogę",
+                    "Ręce wymachuj naturalnie",
+                    "NIE skacz! - tylko podnoś nogi do tyłu",
+                    "Tempo: Umiarkowane"
+                ],
+                time: "3-5 minut",
+                intensity: "Umiarkowana (65-75% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego i kolana! Trenuje tył nóg i pośladki. Możesz robić na przemian z marszem."
+            },
+            {
+                name: "6. MARSZ Z PODNOSZENIEM NÓG NA BOKI",
+                description: "Marsz w miejscu, ale podnosisz nogi na boki. Trenuje boczne części nóg.",
+                howTo: [
+                    "Stań prosto",
+                    "Podnoś jedną nogę na bok (nie za wysoko!)",
+                    "Zmień nogę",
+                    "Ręce wymachuj naturalnie",
+                    "NIE skacz! - tylko podnoś nogi na boki",
+                    "Tempo: Wolne do umiarkowanego"
+                ],
+                time: "3-5 minut",
+                intensity: "Umiarkowana (65-75% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego i kolana! Jeśli boli kolano, zmniejsz zakres lub pomiń. Możesz robić na przemian z marszem."
+            },
+            {
+                name: "7. MARSZ Z ROTACJAMI TUŁOWIA",
+                description: "Marsz w miejscu + skręty tułowia. Trenuje całe ciało, więcej spalania kalorii.",
+                howTo: [
+                    "Stań prosto",
+                    "Maszeruj w miejscu",
+                    "Delikatnie skręcaj tułów w lewo i prawo (naprzemiennie)",
+                    "Ręce wymachuj naturalnie",
+                    "Tempo: Umiarkowane"
+                ],
+                time: "3-5 minut",
+                intensity: "Umiarkowana (65-75% maksymalnego tętna)",
+                notes: "Bezpieczne dla stawu skokowego! Trenuje całe ciało. UWAGA: Nie skręcaj zbyt mocno - tylko delikatnie!"
             }
         ],
         plans: [
@@ -565,6 +641,18 @@ const cardioDictionary = {
                     "Marsz z wysokimi kolanami: 2 minuty (na przemian: 30s wysokie, 1min zwykły)",
                     "Marsz z podnoszeniem nóg do tyłu: 3 minuty",
                     "Marsz w miejscu (schłodzenie): 3 minuty"
+                ]
+            },
+            {
+                name: "Wersja Zaawansowana (20-30 minut)",
+                exercises: [
+                    "Marsz w miejscu: 2 minuty (rozgrzewka)",
+                    "Marsz z wymachem ramion: 5 minut",
+                    "Marsz z wysokimi kolanami: 4 minuty (na przemian: 1min wysokie, 1min zwykły)",
+                    "Marsz z wykrokami (płytkie): 3 minuty (tylko jeśli kolano nie boli!)",
+                    "Marsz z podnoszeniem nóg do tyłu: 3 minuty",
+                    "Marsz z rotacjami tułowia: 3 minuty",
+                    "Marsz w miejscu (schłodzenie): 3-5 minut"
                 ]
             }
         ],
