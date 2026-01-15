@@ -1134,7 +1134,15 @@ function showCardioDetails() {
                 <ol style="margin-left: 20px;">
         `;
         plan.exercises.forEach(ex => {
-            html += `<li style="margin-bottom: 5px;">${ex}</li>`;
+            // Usuń podwójne wypunktowania (kropki i myślniki)
+            let cleanEx = ex.trim();
+            if (cleanEx.startsWith('•')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            if (cleanEx.startsWith('-')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            html += `<li style="margin-bottom: 5px;">${cleanEx}</li>`;
         });
         html += `
                 </ol>
