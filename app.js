@@ -1101,7 +1101,15 @@ function showCardioDetails() {
                 <ol style="margin-left: 20px; margin-top: 5px;">
         `;
         ex.howTo.forEach(step => {
-            html += `<li style="margin-bottom: 5px;">${step}</li>`;
+            // Usuń podwójne wypunktowania (kropki i myślniki)
+            let cleanStep = step.trim();
+            if (cleanStep.startsWith('•')) {
+                cleanStep = cleanStep.substring(1).trim();
+            }
+            if (cleanStep.startsWith('-')) {
+                cleanStep = cleanStep.substring(1).trim();
+            }
+            html += `<li style="margin-bottom: 5px;">${cleanStep}</li>`;
         });
         html += `
                 </ol>
@@ -1169,23 +1177,80 @@ function showExerciseDetails(exerciseName) {
 
         <div class="modal-section">
             <h3>Jak wykonać (krok po kroku):</h3>
-            <ol>
     `;
 
+    let currentOption = null;
     let stepNumber = 1;
-    exercise.howTo.forEach(step => {
+    let inOption = false;
+    
+    exercise.howTo.forEach((step, index) => {
         const trimmedStep = step.trim();
+        
         if (trimmedStep === '') {
-            // Pusty separator - zakończ listę i zacznij nową z kontynuacją numeracji
-            html += `</ol><br><ol start="${stepNumber}">`;
-        } else {
-            html += `<li>${trimmedStep}</li>`;
+            // Pusty separator - zakończ poprzednią sekcję
+            if (inOption && currentOption) {
+                html += `</ol></div>`;
+                inOption = false;
+                currentOption = null;
+            }
+            return;
+        }
+        
+        // Sprawdź czy to nagłówek opcji (OPCJA A, OPCJA B, itd.)
+        const optionMatch = trimmedStep.match(/^(OPCJA [A-Z]:|OPCJA [A-Z]|WARIANT [A-Z]:|WERSJA [A-Z]:)/i);
+        
+        if (optionMatch) {
+            // Zakończ poprzednią opcję jeśli była
+            if (inOption && currentOption) {
+                html += `</ol></div>`;
+            }
+            
+            // Rozpocznij nową opcję
+            currentOption = trimmedStep;
+            inOption = true;
+            html += `
+                <div style="margin-top: 15px; margin-bottom: 10px;">
+                    <h4 style="font-weight: 700; color: #667eea; margin-bottom: 8px;">${trimmedStep}</h4>
+                    <ol start="${stepNumber}">
+            `;
             stepNumber++;
+        } else {
+            // To jest krok w opcji lub zwykły krok
+            if (inOption) {
+                // Krok w opcji - usuń kropkę z początku jeśli jest
+                let stepText = trimmedStep;
+                if (stepText.startsWith('•')) {
+                    stepText = stepText.substring(1).trim();
+                }
+                html += `<li>${stepText}</li>`;
+                stepNumber++;
+            } else {
+                // Zwykły krok - sprawdź czy zaczyna się od kropki lub myślnika
+                let stepText = trimmedStep;
+                if (stepText.startsWith('•') || stepText.startsWith('-')) {
+                    stepText = stepText.substring(1).trim();
+                }
+                
+                // Jeśli to pierwszy krok, rozpocznij listę
+                if (stepNumber === 1) {
+                    html += `<ol>`;
+                }
+                
+                html += `<li>${stepText}</li>`;
+                stepNumber++;
+            }
         }
     });
+    
+    // Zamknij ostatnią opcję jeśli była otwarta
+    if (inOption && currentOption) {
+        html += `</ol></div>`;
+    } else if (stepNumber > 1) {
+        // Zamknij zwykłą listę jeśli była
+        html += `</ol>`;
+    }
 
     html += `
-            </ol>
         </div>
 
         <div class="modal-section">
@@ -1238,7 +1303,15 @@ function showWarmupDetails() {
                 <ul>
         `;
         part.exercises.forEach(ex => {
-            html += `<li>${ex}</li>`;
+            // Usuń podwójne wypunktowania (kropki i myślniki)
+            let cleanEx = ex.trim();
+            if (cleanEx.startsWith('•')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            if (cleanEx.startsWith('-')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            html += `<li>${cleanEx}</li>`;
         });
         html += `
                 </ul>
@@ -1284,7 +1357,15 @@ function showStretchingDetails() {
                 <ul>
         `;
         part.exercises.forEach(ex => {
-            html += `<li>${ex}</li>`;
+            // Usuń podwójne wypunktowania (kropki i myślniki)
+            let cleanEx = ex.trim();
+            if (cleanEx.startsWith('•')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            if (cleanEx.startsWith('-')) {
+                cleanEx = cleanEx.substring(1).trim();
+            }
+            html += `<li>${cleanEx}</li>`;
         });
         html += `
                 </ul>
@@ -1455,7 +1536,18 @@ function saveStartDate() {
 
 function switchLogTab(tab) {
     document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    } else {
+        // Fallback - znajdź przycisk po tekście
+        document.querySelectorAll('.log-tab').forEach(btn => {
+            if ((tab === 'workout' && btn.textContent.includes('Treningi')) ||
+                (tab === 'measurement' && btn.textContent.includes('Pomiary')) ||
+                (tab === 'progress' && btn.textContent.includes('Postępy'))) {
+                btn.classList.add('active');
+            }
+        });
+    }
     
     document.getElementById('log-workout-tab').style.display = tab === 'workout' ? 'block' : 'none';
     document.getElementById('log-measurement-tab').style.display = tab === 'measurement' ? 'block' : 'none';
@@ -1925,8 +2017,13 @@ function exportToCSV() {
 
 function showLog() {
     // Ukryj trening, pokaż dzienniczek
-    document.getElementById('workout-content').style.display = 'none';
-    document.getElementById('log-content').style.display = 'block';
+    const workoutContent = document.getElementById('workout-content');
+    const logContent = document.getElementById('log-content');
+    const daySelector = document.querySelector('.day-selector');
+    
+    if (workoutContent) workoutContent.style.display = 'none';
+    if (logContent) logContent.style.display = 'block';
+    if (daySelector) daySelector.style.display = 'none';
     
     // Zmień aktywne zakładki
     document.querySelectorAll('.tab').forEach(tab => {
@@ -1939,8 +2036,10 @@ function showLog() {
     
     // Ustaw domyślną datę na dzisiaj
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('workout-date').value = today;
-    document.getElementById('measurement-date').value = today;
+    const workoutDateInput = document.getElementById('workout-date');
+    const measurementDateInput = document.getElementById('measurement-date');
+    if (workoutDateInput) workoutDateInput.value = today;
+    if (measurementDateInput) measurementDateInput.value = today;
     
     // Załaduj ćwiczenia dla pierwszego dnia
     loadDayExercises();
@@ -1948,8 +2047,9 @@ function showLog() {
     displayMeasurementEntries();
     
     // Ustaw datę rozpoczęcia jeśli jest zapisana
-    if (trainingLog[currentPlan].startDate) {
-        document.getElementById('start-date').value = trainingLog[currentPlan].startDate;
+    const startDateInput = document.getElementById('start-date');
+    if (startDateInput && trainingLog[currentPlan] && trainingLog[currentPlan].startDate) {
+        startDateInput.value = trainingLog[currentPlan].startDate;
     }
 }
 
