@@ -187,7 +187,7 @@ const exerciseDictionary = {
         title: "ROZPIĘTKI Z HANTLAMI (na ławce/podłodze)",
         description: "Ćwiczenie rozciąga i wzmacnia klatkę piersiową. Ruch podobny do przytulania, ale z hantlami. Bardziej izolowane niż wyciskanie (trenuje głównie klatkę).",
         howTo: [
-            "Pozycja startowa:",
+            "Pozycja startowa",
             "• Połóż się na plecach (na ławce, łóżku lub podłodze)",
             "• Jeśli na podłodze, zegnij nogi w kolanach",
             "• Weź hantle w obie ręce",
@@ -195,13 +195,13 @@ const exerciseDictionary = {
             "• Ręce lekko ugięte w łokciach (nie wyprostowane!)",
             "• Dłonie skierowane do siebie",
             "",
-            "Ruch na boki:",
+            "Ruch na boki",
             "• POWOLI rozłóż ręce na boki",
             "• Ruch jak przytulanie, ale w odwrotną stronę",
             "• Opuszczaj do momentu, gdy poczujesz rozciąganie w klatce",
             "• NIE opuszczaj zbyt nisko - zatrzymaj się gdy ramiona są równolegle do podłogi",
             "",
-            "Ruch z powrotem:",
+            "Ruch z powrotem",
             "• POWOLI złącz ręce z powrotem nad klatką",
             "• Jakbyś przytulał dużą piłkę",
             "• Wydech przy zamykaniu",
@@ -1172,8 +1172,15 @@ function showExerciseDetails(exerciseName) {
             <ol>
     `;
 
+    let stepNumber = 1;
     exercise.howTo.forEach(step => {
-        html += `<li>${step}</li>`;
+        if (step.trim() === '') {
+            // Pusty separator - dodaj przerwę bez numeracji
+            html += `</ol><br><ol start="${stepNumber}">`;
+        } else {
+            html += `<li>${step}</li>`;
+            stepNumber++;
+        }
     });
 
     html += `
