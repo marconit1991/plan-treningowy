@@ -842,6 +842,142 @@ function displayWorkout() {
                     <strong>Ograniczenia:</strong> ${addTermLinks(plan.limitations)}<br>
                     <strong>UNIKAJ:</strong> ${plan.avoid}
                 </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="section-title flex" style="cursor: pointer; font-size: 18px;" onclick="toggleSection('strategy')">
+                        <span>🎯 Strategia Redukcji</span>
+                        <span id="strategy-icon">▼</span>
+                    </div>
+                    <div id="strategy-content" style="display: none; margin-top: 10px;">
+                        <div class="info-box">
+                            <strong>1. Deficyt kaloryczny (najważniejsze!):</strong><br>
+                            • Co to znaczy: Jesz mniej kalorii niż spalasz<br>
+                            • Jak to działa: Redukcja 500-750 kcal dziennie = utrata 0.5-1 kg/tydzień<br>
+                            • Realistyczny cel: ${plan.goal} przy regularności<br>
+                            • Jak to osiągnąć: Jedz mniejsze porcje, unikaj słodyczy, jedz więcej warzyw, śledź kalorie przez pierwsze 2-3 tygodnie<br><br>
+                            
+                            <strong>2. Trening siłowy (zachowanie masy mięśniowej):</strong><br>
+                            • Częstotliwość: 3-4x w tygodniu<br>
+                            • Dlaczego ważne: Podczas redukcji możesz tracić mięśnie, trening siłowy je zachowuje<br>
+                            • Więcej mięśni = szybszy metabolizm = łatwiejsze spalanie kalorii<br>
+                            • Progresja obciążeń: Stopniowo zwiększasz ciężary<br><br>
+                            
+                            <strong>3. Cardio (spalanie kalorii):</strong><br>
+                            • Częstotliwość: 2-3x w tygodniu (może być po treningu siłowym)<br>
+                            • Czas: 20-30 minut umiarkowanej intensywności<br>
+                            • Jak intensywnie: Powinieneś móc rozmawiać podczas cardio (ale z lekką zadyszką)
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="section-title flex" style="cursor: pointer; font-size: 18px;" onclick="toggleSection('progression')">
+                        <span>📈 Progresja</span>
+                        <span id="progression-icon">▼</span>
+                    </div>
+                    <div id="progression-content" style="display: none; margin-top: 10px;">
+                        <div class="info-box">
+                            <strong>Tydzień 1-4: Faza Adaptacji</strong><br>
+                            • Zacznij od lżejszych ciężarów<br>
+                            • Naucz się prawidłowej techniki<br>
+                            • Zwiększaj ciężar gdy zrobisz 12 powtórzeń we wszystkich seriach<br><br>
+                            
+                            <strong>Tydzień 5-12: Faza Intensyfikacji</strong><br>
+                            • Zwiększ obciążenie gdy zrobisz 12 powtórzeń we wszystkich seriach<br>
+                            • Dodaj 1-2 powtórzenia do każdej serii co 2 tygodnie<br>
+                            • Skróć przerwy o 10-15 sekund co 2 tygodnie<br>
+                            • Zwiększ czas cardio do 15-20 minut<br><br>
+                            
+                            <strong>Przykładowa progresja obciążeń (Sebuś):</strong><br>
+                            • Tydzień 1-2: 2x10kg (20kg łącznie)<br>
+                            • Tydzień 3-4: 2x12.5kg (25kg łącznie)<br>
+                            • Tydzień 5-6: 2x15kg (30kg łącznie)<br>
+                            • Tydzień 7-8: 2x17.5kg (35kg łącznie)<br>
+                            • Tydzień 9-12: 2x20kg (40kg łącznie) - maksimum<br><br>
+                            
+                            <strong>UWAGA:</strong> Jeśli nie masz hantli o różnych ciężarach, zwiększaj liczbę powtórzeń i skracaj przerwy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="section-title flex" style="cursor: pointer; font-size: 18px;" onclick="toggleSection('safety')">
+                        <span>🚨 Zasady Bezpieczeństwa</span>
+                        <span id="safety-icon">▼</span>
+                    </div>
+                    <div id="safety-content" style="display: none; margin-top: 10px;">
+                        <div class="info-box">
+                            <strong>Przed każdym treningiem:</strong><br>
+                            ✅ Zawsze rozgrzewka (10 minut minimum)<br>
+                            ✅ Sprawdź ból - jeśli kolano lub staw skokowy boli, pomiń ćwiczenie<br>
+                            ✅ Zacznij od lżejszych ciężarów - lepiej za mało niż za dużo<br>
+                            ✅ Prawidłowa technika - poproś asekuranta o obserwację<br><br>
+                            
+                            <strong>Podczas treningu:</strong><br>
+                            ✅ Słuchaj swojego ciała - ból = STOP<br>
+                            ✅ Oddychaj - wydech przy wysiłku, wdech przy opuszczaniu<br>
+                            ✅ Kontrolowane ruchy - nie szarp, nie pchaj<br>
+                            ✅ Stabilna pozycja - szczególnie przy ćwiczeniach stojących<br><br>
+                            
+                            <strong>Po treningu:</strong><br>
+                            ✅ Zawsze rozciąganie (5 minut minimum)<br>
+                            ✅ Nawodnienie - pij wodę<br>
+                            ✅ Odpoczynek - minimum 1 dzień przerwy między treningami
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="section-title flex" style="cursor: pointer; font-size: 18px;" onclick="toggleSection('diet')">
+                        <span>🍎 Dieta - Podstawowe Zasady</span>
+                        <span id="diet-icon">▼</span>
+                    </div>
+                    <div id="diet-content" style="display: none; margin-top: 10px;">
+                        <div class="info-box">
+                            <strong>Deficit kaloryczny:</strong><br>
+                            • Oblicz swoje BMR (podstawowa przemiana materii)<br>
+                            • Odejmij 500-750 kcal dziennie<br>
+                            • Śledź kalorie przez pierwsze 2-3 tygodnie (żeby zobaczyć ile jesz)<br><br>
+                            
+                            <strong>Podstawowe zasady:</strong><br>
+                            1. Białko: 1.6-2g na kg masy ciała (zachowanie mięśni)<br>
+                            2. Węglowodany: Umiarkowane, głównie przed/po treningu<br>
+                            3. Tłuszcze: Zdrowe tłuszcze (orzechy, awokado, oliwa)<br>
+                            4. Warzywa: Dużo warzyw (niska kaloryczność, dużo błonnika)<br>
+                            5. Woda: Minimum 2-3 litry dziennie<br><br>
+                            
+                            <strong>Przykładowy dzień:</strong><br>
+                            • Śniadanie: Jajka + warzywa + pełnoziarniste pieczywo<br>
+                            • Obiad: Mięso/drób + warzywa + kasza/ryż<br>
+                            • Przed treningiem: Banan lub mała porcja węglowodanów<br>
+                            • Po treningu: Białko (np. shake, jajka, kurczak) + węglowodany<br>
+                            • Kolacja: Białko + warzywa (lekka kolacja)
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="section-title flex" style="cursor: pointer; font-size: 18px;" onclick="toggleSection('progress')">
+                        <span>📊 Śledzenie Postępów</span>
+                        <span id="progress-icon">▼</span>
+                    </div>
+                    <div id="progress-content" style="display: none; margin-top: 10px;">
+                        <div class="info-box">
+                            <strong>Co mierzyć:</strong><br>
+                            1. Waga ciała - raz w tygodniu, rano, na czczo<br>
+                            2. Obwody - raz w miesiącu (klatka, talia, biodra, uda)<br>
+                            3. Siła - zapisuj ciężary i powtórzenia w dzienniczku<br>
+                            4. Zdjęcia - raz w miesiącu (przed/po)<br><br>
+                            
+                            <strong>Realistyczne oczekiwania:</strong><br>
+                            • Tydzień 1-2: Możliwy wzrost wagi (zatrzymanie wody)<br>
+                            • Tydzień 3-4: Pierwsze efekty (1-2 kg)<br>
+                            • Miesiąc 2-3: Stabilna redukcja (2-4 kg/miesiąc)<br>
+                            • Miesiąc 4-6: Kontynuacja redukcji (${plan.goal})
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
@@ -907,6 +1043,20 @@ function togglePlanInfo() {
     } else {
         content.style.display = 'none';
         icon.textContent = '▼';
+    }
+}
+
+function toggleSection(sectionName) {
+    const content = document.getElementById(sectionName + '-content');
+    const icon = document.getElementById(sectionName + '-icon');
+    if (content && icon) {
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            icon.textContent = '▲';
+        } else {
+            content.style.display = 'none';
+            icon.textContent = '▼';
+        }
     }
 }
 
