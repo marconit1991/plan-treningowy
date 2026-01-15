@@ -17,6 +17,15 @@
             min-height: 100vh;
             padding: 20px;
             color: #333;
+            transition: background 0.5s ease;
+        }
+
+        body.plan-sebus {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        body.plan-kobieta {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
         }
 
         .container {
@@ -33,6 +42,15 @@
             color: white;
             padding: 30px;
             text-align: center;
+            transition: background 0.5s ease;
+        }
+
+        body.plan-sebus .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        body.plan-kobieta .header {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
         }
 
         .header h1 {
@@ -63,6 +81,16 @@
             background: white;
             color: #667eea;
             border-bottom: 3px solid #667eea;
+        }
+
+        body.plan-sebus .tab.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+        }
+
+        body.plan-kobieta .tab.active {
+            color: #e91e63;
+            border-bottom: 3px solid #e91e63;
         }
 
         .content {
@@ -98,6 +126,16 @@
             border-color: #667eea;
         }
 
+        body.plan-sebus .day-btn.active {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        body.plan-kobieta .day-btn.active {
+            background: #e91e63;
+            border-color: #e91e63;
+        }
+
         .workout-section {
             margin-bottom: 25px;
         }
@@ -109,6 +147,17 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #667eea;
+            transition: color 0.5s ease, border-color 0.5s ease;
+        }
+
+        body.plan-sebus .section-title {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+        }
+
+        body.plan-kobieta .section-title {
+            color: #e91e63;
+            border-bottom: 2px solid #e91e63;
         }
 
         .section-title.flex {
@@ -126,6 +175,14 @@
             border-radius: 10px;
             border-left: 4px solid #667eea;
             transition: all 0.3s;
+        }
+
+        body.plan-sebus .exercise-item {
+            border-left: 4px solid #3498db;
+        }
+
+        body.plan-kobieta .exercise-item {
+            border-left: 4px solid #e91e63;
         }
 
         .exercise-item:hover {
@@ -163,6 +220,26 @@
 
         .exercise-link:hover {
             background: #667eea;
+            color: white;
+        }
+
+        body.plan-sebus .exercise-link {
+            color: #3498db;
+            background: #e3f2fd;
+        }
+
+        body.plan-sebus .exercise-link:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        body.plan-kobieta .exercise-link {
+            color: #e91e63;
+            background: #fce4ec;
+        }
+
+        body.plan-kobieta .exercise-link:hover {
+            background: #e91e63;
             color: white;
         }
 
@@ -230,6 +307,15 @@
             color: #667eea;
             margin-bottom: 20px;
             padding-right: 40px;
+            transition: color 0.5s ease;
+        }
+
+        body.plan-sebus .modal-title {
+            color: #3498db;
+        }
+
+        body.plan-kobieta .modal-title {
+            color: #e91e63;
         }
 
         .modal-section {
@@ -314,10 +400,27 @@
             text-decoration: underline;
             cursor: pointer;
             font-weight: 600;
+            transition: color 0.3s ease;
         }
 
         .dictionary-link:hover {
             color: #764ba2;
+        }
+
+        body.plan-sebus .dictionary-link {
+            color: #3498db;
+        }
+
+        body.plan-sebus .dictionary-link:hover {
+            color: #2980b9;
+        }
+
+        body.plan-kobieta .dictionary-link {
+            color: #e91e63;
+        }
+
+        body.plan-kobieta .dictionary-link:hover {
+            color: #c2185b;
         }
     </style>
 </head>
