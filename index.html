@@ -53,9 +53,31 @@
             background: linear-gradient(135deg, #dd9ecd 0%, #c77bb8 100%);
         }
 
+        .header > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header > div > div:first-child {
+            flex: 1;
+        }
+
         .header h1 {
             font-size: 28px;
             margin-bottom: 10px;
+        }
+
+        .version-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
         }
 
         .tabs {
@@ -440,13 +462,45 @@
         body.plan-kobieta .dictionary-link:hover {
             color: #c77bb8;
         }
+
+        .log-toggle-btn {
+            margin: 20px 0;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .log-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        body.plan-sebus .log-toggle-btn {
+            background: linear-gradient(135deg, #082567 0%, #0a3a8a 100%);
+        }
+
+        body.plan-kobieta .log-toggle-btn {
+            background: linear-gradient(135deg, #dd9ecd 0%, #c77bb8 100%);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏋️ Plan Treningowy</h1>
-            <p>Sebuś & Alusia</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div>
+                    <h1>🏋️ Plan Treningowy</h1>
+                    <p>Sebuś & Alusia</p>
+                </div>
+                <div class="version-badge">v12</div>
+            </div>
         </div>
 
         <div class="tabs">
