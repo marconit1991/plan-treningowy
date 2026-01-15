@@ -77,6 +77,10 @@
             color: #666;
         }
 
+        .tab.log {
+            flex: 0.8;
+        }
+
         .tab.active {
             background: white;
             color: #667eea;
@@ -448,6 +452,7 @@
         <div class="tabs">
             <button class="tab active" onclick="switchPlan('sebus')">Sebuś</button>
             <button class="tab" onclick="switchPlan('kobieta')">Alusia</button>
+            <button class="tab log" onclick="showLog()">📊 Dzienniczek</button>
         </div>
 
         <div class="content">
@@ -460,6 +465,99 @@
 
             <div id="workout-content">
                 <!-- Trening będzie tutaj -->
+            </div>
+            
+            <div id="log-content" class="log-section" style="display: none;">
+                <div class="log-tabs">
+                    <button class="log-tab active" onclick="switchLogTab('workout')">💪 Treningi</button>
+                    <button class="log-tab" onclick="switchLogTab('measurement')">📏 Pomiary</button>
+                    <button class="log-tab" onclick="switchLogTab('progress')">📈 Postępy</button>
+                </div>
+                
+                <div id="log-workout-tab">
+                    <div class="log-form">
+                        <h3 style="margin-bottom: 15px;">Dodaj trening</h3>
+                        <div class="form-group">
+                            <label>Data treningu:</label>
+                            <input type="date" id="workout-date" value="">
+                        </div>
+                        <div class="form-group">
+                            <label>Dzień treningu:</label>
+                            <select id="workout-day" onchange="loadDayExercises()">
+                                <option value="1">Dzień 1 - Górna część (Push)</option>
+                                <option value="2">Dzień 2 - Dolna część</option>
+                                <option value="3">Dzień 3 - Górna część (Pull)</option>
+                                <option value="4">Dzień 4 - Full Body</option>
+                            </select>
+                        </div>
+                        <div id="workout-exercises"></div>
+                        <button class="btn btn-primary" onclick="saveWorkout()" style="margin-top: 15px;">💾 Zapisz trening</button>
+                    </div>
+                    <div class="log-entries" id="workout-entries"></div>
+                </div>
+                
+                <div id="log-measurement-tab" style="display: none;">
+                    <div class="log-form">
+                        <h3 style="margin-bottom: 15px;">Dodaj pomiar</h3>
+                        <div class="form-group">
+                            <label>Data pomiaru:</label>
+                            <input type="date" id="measurement-date" value="">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Waga (kg):</label>
+                                <input type="number" id="measurement-weight" step="0.1" placeholder="np. 85.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Obwód klatki (cm):</label>
+                                <input type="number" id="measurement-chest" step="0.5" placeholder="np. 100">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Obwód talii (cm):</label>
+                                <input type="number" id="measurement-waist" step="0.5" placeholder="np. 90">
+                            </div>
+                            <div class="form-group">
+                                <label>Obwód bioder (cm):</label>
+                                <input type="number" id="measurement-hips" step="0.5" placeholder="np. 100">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Obwód uda (cm):</label>
+                            <input type="number" id="measurement-thigh" step="0.5" placeholder="np. 60">
+                        </div>
+                        <div class="form-group">
+                            <label>Notatki:</label>
+                            <textarea id="measurement-notes" placeholder="Dodatkowe uwagi..."></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveMeasurement()">💾 Zapisz pomiar</button>
+                    </div>
+                    <div class="log-entries" id="measurement-entries"></div>
+                </div>
+                
+                <div id="log-progress-tab" style="display: none;">
+                    <div class="log-form">
+                        <h3 style="margin-bottom: 15px;">Ustawienia</h3>
+                        <div class="form-group">
+                            <label>Data rozpoczęcia treningów:</label>
+                            <input type="date" id="start-date" onchange="saveStartDate()">
+                        </div>
+                        <div id="training-stats" style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 10px;">
+                            <h4>Statystyki treningów</h4>
+                            <div id="stats-content"></div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <h3 style="margin-bottom: 15px;">Wykresy postępów</h3>
+                        <canvas id="weight-chart" style="max-width: 100%; height: 300px; margin-bottom: 20px;"></canvas>
+                        <canvas id="measurements-chart" style="max-width: 100%; height: 300px;"></canvas>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-secondary export-btn" onclick="exportToCSV()">📥 Eksportuj do CSV</button>
+                </div>
             </div>
         </div>
     </div>
