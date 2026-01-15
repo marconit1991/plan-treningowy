@@ -1174,11 +1174,12 @@ function showExerciseDetails(exerciseName) {
 
     let stepNumber = 1;
     exercise.howTo.forEach(step => {
-        if (step.trim() === '') {
-            // Pusty separator - dodaj przerwę bez numeracji
+        const trimmedStep = step.trim();
+        if (trimmedStep === '') {
+            // Pusty separator - zakończ listę i zacznij nową z kontynuacją numeracji
             html += `</ol><br><ol start="${stepNumber}">`;
         } else {
-            html += `<li>${step}</li>`;
+            html += `<li>${trimmedStep}</li>`;
             stepNumber++;
         }
     });
