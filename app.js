@@ -609,6 +609,15 @@ function switchPlan(plan) {
             tab.classList.add('active');
         }
     });
+    
+    // Zmień kolorystykę
+    document.body.classList.remove('plan-sebus', 'plan-kobieta');
+    if (plan === 'sebus') {
+        document.body.classList.add('plan-sebus');
+    } else {
+        document.body.classList.add('plan-kobieta');
+    }
+    
     displayWorkout();
 }
 
@@ -953,4 +962,5 @@ window.onclick = function(event) {
 }
 
 // Inicjalizacja
+document.body.classList.add('plan-sebus'); // Domyślnie niebieski dla Sebusia
 displayWorkout();
