@@ -631,9 +631,9 @@ function displayWorkout() {
 
     let html = `
         <div class="workout-section">
-            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="section-title flex">
                 <span>🔥 Rozgrzewka: ${addTermLinks(day.warmup)}</span>
-                <a class="exercise-link" onclick="showWarmupDetails()" style="margin-left: 10px;">📖 Jak wykonać?</a>
+                <a class="exercise-link" onclick="showWarmupDetails()">📖 Jak wykonać?</a>
             </div>
         </div>
 
@@ -670,9 +670,9 @@ function displayWorkout() {
         </div>
 
         <div class="workout-section">
-            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="section-title flex">
                 <span>🧘 Rozciąganie: ${addTermLinks(day.stretching)}</span>
-                <a class="exercise-link" onclick="showStretchingDetails()" style="margin-left: 10px;">📖 Jak wykonać?</a>
+                <a class="exercise-link" onclick="showStretchingDetails()">📖 Jak wykonać?</a>
             </div>
         </div>
     `;
