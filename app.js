@@ -1,0 +1,758 @@
+// Dane treningowe
+const trainingData = {
+    sebus: {
+        name: "Sebuś",
+        goal: "Redukcja 10-20 kg w 3-6 miesięcy",
+        equipment: "Hantle 2x20kg",
+        limitations: "Lewe kolano (ból), lewy staw skokowy (zerwany więzozrost)",
+        avoid: "Głębokich przysiadów, skoków",
+        days: {
+            1: {
+                name: "Górna część (Push)",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Wyciskanie hantli", sets: "3x8-12", rest: "90s", weight: "Start: 2x10kg", note: "poduszki pod plecami", warning: "Nie opuszczaj zbyt nisko!" },
+                    { name: "Wyciskanie nad głową", sets: "3x8-12", rest: "90s", weight: "Start: 2x7.5kg" },
+                    { name: "Rozpiętki", sets: "3x10-15", rest: "60s", weight: "Start: 2x5kg" },
+                    { name: "Biceps", sets: "3x10-12", rest: "60s", weight: "Start: 2x5kg" },
+                    { name: "Triceps (francuskie)", sets: "3x10-12", rest: "60s", weight: "Start: 1x5-10kg" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min"
+            },
+            2: {
+                name: "Dolna część",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Martwy ciąg RDL", sets: "3x8-10", rest: "90s", weight: "Start: 2x10kg", warning: "Nie schodź nisko!" },
+                    { name: "Wykroki", sets: "3x10-12", rest: "90s", weight: "Start: bez ciężaru", warning: "Płytkie! Jeśli boli kolano - POMIŃ" },
+                    { name: "Hip thrust", sets: "3x12-15", rest: "60s", weight: "Start: bez ciężaru", safe: "Bezpieczne!" },
+                    { name: "Unoszenie nóg", sets: "3x15-20", rest: "45s", weight: "" },
+                    { name: "Deska", sets: "3x30-60s", rest: "60s", weight: "Start: 20-30s" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min"
+            },
+            3: {
+                name: "Górna część (Pull)",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Wiosłowanie", sets: "3x8-12", rest: "90s", weight: "Start: 2x10kg", warning: "Nie schylaj się nisko!" },
+                    { name: "Podciąganie do boku", sets: "3x10-12", rest: "90s", weight: "Start: 2x5kg" },
+                    { name: "Unoszenie z przodu", sets: "3x10-12", rest: "60s", weight: "Start: 2x5kg" },
+                    { name: "Wiosłowanie jednorącz", sets: "3x10-12", rest: "60s", weight: "Start: 1x10kg" },
+                    { name: "Martwy ciąg lekki", sets: "3x8-10", rest: "90s", weight: "Start: 2x10kg", warning: "Płytki zakres!" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min"
+            },
+            4: {
+                name: "Full Body",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Martwy ciąg RDL", sets: "3x8-10", rest: "90s", weight: "" },
+                    { name: "Wyciskanie nad głową", sets: "3x8-12", rest: "90s", weight: "" },
+                    { name: "Wiosłowanie", sets: "3x8-12", rest: "90s", weight: "" },
+                    { name: "Hip thrust", sets: "3x12-15", rest: "60s", weight: "" },
+                    { name: "Deska", sets: "3x30-60s", rest: "60s", weight: "" },
+                    { name: "Unoszenie nóg", sets: "3x15-20", rest: "45s", weight: "" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min"
+            }
+        }
+    },
+    kobieta: {
+        name: "Alusia",
+        goal: "Redukcja 40 kg w 1.5 roku (~2.5 kg/miesiąc)",
+        equipment: "Hantle z możliwością transformacji w sztangę",
+        limitations: "Bawoli garb, lewe kolano (ból), górna część pleców (ból od siedzącej pracy)",
+        avoid: "Podskoków, przysiadów, biegania",
+        days: {
+            1: {
+                name: "Górna część (Push)",
+                warmup: "10 min | ⚠️ Rozciągnij klatkę i szyję!",
+                exercises: [
+                    { name: "Wyciskanie hantli", sets: "3x8-12", rest: "90s", weight: "Start: 2x5kg", note: "poduszki pod plecami", warning: "Głowa w linii z kręgosłupem!" },
+                    { name: "Wyciskanie nad głową", sets: "3x8-12", rest: "90s", weight: "Start: 2x3-5kg", warning: "Prosta postawa!" },
+                    { name: "Rozpiętki", sets: "3x10-15", rest: "60s", weight: "Start: 2x2.5-5kg" },
+                    { name: "Biceps", sets: "3x10-12", rest: "60s", weight: "Start: 2x3-5kg" },
+                    { name: "Triceps (francuskie)", sets: "3x10-12", rest: "60s", weight: "Start: 1x3-5kg" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min | ⚠️ Klatka 2x45s, szyja 2x30s, ćwiczenie przy ścianie!"
+            },
+            2: {
+                name: "Dolna część",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Martwy ciąg RDL", sets: "3x8-10", rest: "90s", weight: "Start: 2x5kg", warning: "Nie schodź nisko!" },
+                    { name: "Wykroki", sets: "3x10-12", rest: "90s", weight: "Start: bez ciężaru", warning: "Płytkie! Jeśli boli kolano - POMIŃ" },
+                    { name: "Hip thrust", sets: "3x12-15", rest: "60s", weight: "Start: bez ciężaru", safe: "Bezpieczne!" },
+                    { name: "Unoszenie nóg", sets: "3x15-20", rest: "45s", weight: "" },
+                    { name: "Deska", sets: "3x30-60s", rest: "60s", weight: "Start: 20-30s", warning: "Jeśli boli plecy - pomiń" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min | ⚠️ Klatka 2x45s, szyja 2x30s!"
+            },
+            3: {
+                name: "Górna część (Pull)",
+                warmup: "10 min | ⚠️ Rozciągnij klatkę i szyję!",
+                exercises: [
+                    { name: "Wiosłowanie", sets: "3x8-12", rest: "90s", weight: "Start: 2x5kg", warning: "Głowa w linii z kręgosłupem!" },
+                    { name: "Podciąganie do boku", sets: "3x10-12", rest: "90s", weight: "Start: 2x2.5-5kg" },
+                    { name: "Unoszenie z przodu", sets: "3x10-12", rest: "60s", weight: "Start: 2x2.5-5kg" },
+                    { name: "Wiosłowanie jednorącz", sets: "3x10-12", rest: "60s", weight: "Start: 1x5kg" },
+                    { name: "Martwy ciąg lekki", sets: "3x8-10", rest: "90s", weight: "Start: 2x5kg", warning: "Jeśli boli plecy - POMIŃ" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min | ⚠️ Klatka 2x45s, szyja 2x30s, ćwiczenie przy ścianie!"
+            },
+            4: {
+                name: "Full Body",
+                warmup: "10 min",
+                exercises: [
+                    { name: "Martwy ciąg RDL", sets: "3x8-10", rest: "90s", weight: "" },
+                    { name: "Wyciskanie nad głową", sets: "3x8-12", rest: "90s", weight: "" },
+                    { name: "Wiosłowanie", sets: "3x8-12", rest: "90s", weight: "" },
+                    { name: "Hip thrust", sets: "3x12-15", rest: "60s", weight: "" },
+                    { name: "Deska", sets: "3x30-60s", rest: "60s", weight: "" },
+                    { name: "Unoszenie nóg", sets: "3x15-20", rest: "45s", weight: "" }
+                ],
+                cardio: "10 min - Marsz w miejscu",
+                stretching: "5 min | ⚠️ Klatka 2x45s, szyja 2x30s, ćwiczenie przy ścianie!"
+            }
+        }
+    }
+};
+
+// Słowniczek ćwiczeń - szczegółowe opisy (skrócona wersja)
+const exerciseDictionary = {
+    "Wyciskanie hantli": {
+        title: "WYCISKANIE HANTLI",
+        description: "Ćwiczenie trenuje klatkę piersiową. Podobne do pompek, ale leżąc z hantlami.",
+        howTo: [
+            "Opcja A (NAJŁATWIEJSZE): Użyj 2-3 grubych poduszek pod plecami (wysokość 15-25 cm)",
+            "Połóż się na plecach na poduszkach, nogi zgięte w kolanach",
+            "Weź hantle w obie ręce, unieś nad klatkę piersiową",
+            "POWOLI opuszczaj hantle na boki - łokcie muszą być poniżej poziomu ciała!",
+            "POWOLI podnoś hantle z powrotem do góry"
+        ],
+        muscles: "Klatka piersiowa (główne), tricepsy, barki (pomocnicze)",
+        mistakes: [
+            "Opuszczanie zbyt nisko (może uszkodzić barki)",
+            "Szarpanie hantlami (kontrolowane ruchy!)",
+            "Zbyt szybkie ruchy",
+            "Niestabilne podparcie"
+        ],
+        notes: "NAJLEPSZE: Opcja A (poduszki). Zacznij od lżejszych hantli. Sprawdź stabilność przed rozpoczęciem."
+    },
+    "Wyciskanie nad głową": {
+        title: "WYCISKANIE NAD GŁOWĄ",
+        description: "Ćwiczenie trenuje barki. Podnosisz hantle nad głowę.",
+        howTo: [
+            "Usiądź na krześle/ławce z oparciem (ZALECANE - bezpieczniejsze)",
+            "Weź hantle w obie ręce, unieś na wysokość barków",
+            "Dłonie skierowane do przodu, łokcie skierowane w dół (nie na boki!)",
+            "POWOLI podnoś hantle nad głowę (ruch prosto w górę)",
+            "POWOLI opuszczaj z powrotem do barków"
+        ],
+        muscles: "Barki (główne), tricepsy (pomocnicze)",
+        mistakes: [
+            "Łokcie na boki (powinny być skierowane w dół)",
+            "Zbyt szeroki chwyt",
+            "Szarpanie",
+            "Wyginanie pleców"
+        ],
+        notes: "Siedząc jest bezpieczniejsze dla pleców. Zacznij od lżejszych hantli."
+    },
+    "Rozpiętki": {
+        title: "ROZPIĘTKI Z HANTLAMI",
+        description: "Ćwiczenie rozciąga i wzmacnia klatkę piersiową. Ruch podobny do przytulania, ale z hantlami.",
+        howTo: [
+            "Połóż się na plecach (na ławce, łóżku lub podłodze)",
+            "Weź hantle w obie ręce, unieś nad klatkę piersiową",
+            "Ręce lekko ugięte w łokciach (nie wyprostowane!)",
+            "POWOLI rozłóż ręce na boki (jak przytulanie w odwrotną stronę)",
+            "POWOLI złącz ręce z powrotem nad klatką"
+        ],
+        muscles: "Klatka piersiowa (główne), przednie części barków (pomocnicze)",
+        mistakes: [
+            "Wyprostowane ręce (powinny być lekko ugięte!)",
+            "Opuszczanie zbyt nisko",
+            "Zbyt szybkie ruchy",
+            "Szarpanie"
+        ],
+        notes: "Użyj lżejszych hantli niż przy wyciskaniu. Ręce ZAWSZE lekko ugięte!"
+    },
+    "Biceps": {
+        title: "UGINANIE RAMION Z HANTLAMI (BICEPS)",
+        description: "Ćwiczenie trenuje bicepsy (przednia część ramion). Podnosisz hantle zginając ręce w łokciach.",
+        howTo: [
+            "Stań prosto (lub usiądź), stopy na szerokość bioder",
+            "Weź hantle w obie ręce, ręce wyprostowane wzdłuż tułowia",
+            "POWOLI zginaj ręce w łokciach, podnoś hantle do barków",
+            "NIE ruszaj ramionami - tylko przedramiona!",
+            "Trzymaj łokcie przy tułowiu (nie odsuwaj na boki)",
+            "POWOLI opuszczaj hantle z powrotem"
+        ],
+        muscles: "Bicepsy (główne), przedramiona (pomocnicze)",
+        mistakes: [
+            "Ruszanie ramionami (tylko przedramiona!)",
+            "Odsuwanie łokci na boki",
+            "Szarpanie",
+            "Zbyt szybkie ruchy"
+        ],
+        notes: "Zacznij od lżejszych hantli. Możesz robić na siedząco (łatwiej kontrolować)."
+    },
+    "Triceps (francuskie)": {
+        title: "WYCISKANIE FRANCUSKIE Z HANTLAMI (TRICEPS)",
+        description: "Ćwiczenie trenuje tricepsy (tył ramion). Podnosisz hantle zginając ręce za głową.",
+        howTo: [
+            "Usiądź na krześle/ławce z oparciem (ZALECANE)",
+            "Weź jedną hantlę w obie ręce (lub dwie osobno)",
+            "Unieś hantlę nad głowę, ręce wyprostowane",
+            "Łokcie skierowane do przodu (nie na boki!)",
+            "POWOLI zginaj ręce w łokciach, opuszczaj hantlę za głowę",
+            "POWOLI prostuj ręce z powrotem nad głową"
+        ],
+        muscles: "Tricepsy (główne), przedramiona (pomocnicze)",
+        mistakes: [
+            "Łokcie na boki (powinny być do przodu!)",
+            "Zbyt szybkie ruchy",
+            "Szarpanie",
+            "Opuszczanie zbyt nisko"
+        ],
+        notes: "Zacznij od lżejszych hantli. Siedząc jest bezpieczniejsze. Możesz użyć jednej hantli w obie ręce."
+    },
+    "Wiosłowanie": {
+        title: "WIOSŁOWANIE Z HANTLAMI W OPADZIE TUŁOWIA",
+        description: "Ćwiczenie trenuje plecy. Ruch jak wiosłowanie w łódce, ale z hantlami.",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce",
+            "Delikatnie pochyl się do przodu (tylko do 45 stopni - nie zbyt nisko!)",
+            "WAŻNE: Plecy proste (nie zaokrąglone!), kolana lekko ugięte",
+            "POWOLI podnoś hantle do tułowia, zginając ręce w łokciach",
+            "Łokcie blisko tułowia (nie na boki!)",
+            "POWOLI opuszczaj hantle z powrotem"
+        ],
+        muscles: "Plecy (główne), bicepsy, tylne części barków (pomocnicze)",
+        mistakes: [
+            "Zaokrąglone plecy (ZAWSZE proste!)",
+            "Zbyt głęboki opad (tylko 45 stopni)",
+            "Łokcie na boki",
+            "Szarpanie"
+        ],
+        notes: "Nie schylaj się zbyt nisko (bezpieczne dla stawu skokowego!). Jeśli boli plecy, zmniejsz opad tułowia."
+    },
+    "Podciąganie do boku": {
+        title: "PODCIĄGANIE HANTLI DO BOKU (BARKI)",
+        description: "Ćwiczenie trenuje barki (boczne części). Podnosisz hantle na boki.",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce, ręce wyprostowane wzdłuż tułowia",
+            "Dłonie skierowane do siebie",
+            "POWOLI podnoś hantle na boki",
+            "Ręce wyprostowane (ale lekko ugięte w łokciach)",
+            "Podnoś do momentu, gdy ramiona są równolegle do podłogi",
+            "NIE podnoś zbyt wysoko - zatrzymaj się na wysokości barków",
+            "POWOLI opuszczaj hantle z powrotem"
+        ],
+        muscles: "Barki - boczne części (główne), przedramiona (pomocnicze)",
+        mistakes: [
+            "Podnoszenie zbyt wysoko (tylko do barków!)",
+            "Szarpanie",
+            "Ruszanie tułowiem (tylko ręce!)",
+            "Zbyt szybkie ruchy"
+        ],
+        notes: "Zacznij od lżejszych hantli. To ćwiczenie może być trudne na początku - to normalne!"
+    },
+    "Unoszenie z przodu": {
+        title: "UNOSZENIE HANTLI Z PRZODU (BARKI)",
+        description: "Ćwiczenie trenuje przednie części barków. Podnosisz hantle przed sobą.",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce, ręce wyprostowane przed sobą",
+            "Dłonie skierowane do siebie",
+            "POWOLI podnoś hantle przed sobą",
+            "Ręce wyprostowane (ale lekko ugięte w łokciach)",
+            "Podnoś do momentu, gdy ramiona są równolegle do podłogi",
+            "NIE podnoś zbyt wysoko - zatrzymaj się na wysokości barków",
+            "POWOLI opuszczaj hantle z powrotem"
+        ],
+        muscles: "Barki - przednie części (główne), przedramiona (pomocnicze)",
+        mistakes: [
+            "Podnoszenie zbyt wysoko (tylko do barków!)",
+            "Szarpanie",
+            "Ruszanie tułowiem (tylko ręce!)",
+            "Zbyt szybkie ruchy"
+        ],
+        notes: "Zacznij od lżejszych hantli. Możesz robić jedną ręką na raz (łatwiej kontrolować)."
+    },
+    "Wiosłowanie jednorącz": {
+        title: "WIOSŁOWANIE JEDNORĄCZ Z HANTLAMI",
+        description: "Ćwiczenie trenuje plecy (jedna strona na raz). Podobne do wiosłowania oburącz, ale bardziej izolowane.",
+        howTo: [
+            "Stań obok ławki/krzesła",
+            "Oprzyj jedną rękę i kolano na ławce (dla równowagi)",
+            "Druga noga na podłodze",
+            "Weź hantlę w wolną rękę",
+            "Delikatnie pochyl się (plecy proste!)",
+            "POWOLI podnoś hantlę do tułowia, zginając rękę w łokciu",
+            "Łokieć blisko tułowia (nie na bok!)",
+            "POWOLI opuszczaj hantlę z powrotem",
+            "Zrób 10-12 powtórzeń na jedną rękę, potem zmień stronę"
+        ],
+        muscles: "Plecy - jedna strona (główne), biceps, tylna część barku (pomocnicze)",
+        mistakes: [
+            "Zaokrąglone plecy (ZAWSZE proste!)",
+            "Łokieć na bok",
+            "Szarpanie",
+            "Zbyt głęboki opad"
+        ],
+        notes: "Nie schylaj się zbyt nisko (bezpieczne dla stawu skokowego!). Jeśli nie masz ławki, możesz oprzeć się o ścianę/krzesło."
+    },
+    "Martwy ciąg lekki": {
+        title: "MARTWY CIĄG Z HANTLAMI (lekki, dla pleców)",
+        description: "Ćwiczenie trenuje plecy i tył nóg. Podnosisz hantle z podłogi (ale płytko!). WAŻNE: Płytki zakres - nie schylaj się zbyt nisko!",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce, hantle przed sobą na wysokości ud",
+            "POWOLI pochyl się do przodu",
+            "TYLKO do 30-45 stopni - nie schylaj się zbyt nisko!",
+            "Plecy proste (nie zaokrąglone!), kolana lekko ugięte",
+            "Hantle opuszczaj wzdłuż nóg",
+            "ZATRZYMAJ SIĘ gdy poczujesz rozciąganie w plecach/tylnych udach",
+            "NIE schodź niżej!",
+            "POWOLI wróć do pozycji wyprostowanej"
+        ],
+        muscles: "Plecy, tylne części ud (główne), pośladki (pomocnicze)",
+        mistakes: [
+            "Zaokrąglone plecy (ZAWSZE proste!)",
+            "Zbyt głęboki opad (tylko 30-45 stopni!)",
+            "Szarpanie",
+            "Wyprostowane kolana (lekko ugięte!)"
+        ],
+        notes: "BARDZO WAŻNE: Płytki zakres - nie schylaj się zbyt nisko! Jeśli boli plecy lub staw skokowy, zmniejsz zakres jeszcze bardziej. Jeśli boli, możesz pominąć to ćwiczenie."
+    },
+    "Martwy ciąg RDL": {
+        title: "MARTWY CIĄG RUMUŃSKI Z HANTLAMI (RDL)",
+        description: "Ćwiczenie trenuje tylne części ud i pośladki. Podobne do martwego ciągu, ale bardziej skupia się na tyłach ud. WAŻNE: Bez głębokiego przysiadu - bezpieczne dla kolana!",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce, hantle przed sobą na wysokości ud",
+            "Kolana lekko ugięte (nie wyprostowane!)",
+            "POWOLI pochyl się do przodu",
+            "TYLKO do 30-45 stopni - nie schylaj się zbyt nisko!",
+            "Plecy proste (nie zaokrąglone!), kolana lekko ugięte (nie prostuj!)",
+            "Hantle opuszczaj wzdłuż nóg",
+            "ZATRZYMAJ SIĘ gdy poczujesz napięcie w tylnej części ud",
+            "NIE schodź niżej!",
+            "POWOLI wróć do pozycji wyprostowanej"
+        ],
+        muscles: "Tylne części ud, pośladki (główne), plecy - dolna część (pomocnicze)",
+        mistakes: [
+            "Zaokrąglone plecy (ZAWSZE proste!)",
+            "Zbyt głęboki opad (tylko 30-45 stopni!)",
+            "Wyprostowane kolana (lekko ugięte!)",
+            "Szarpanie"
+        ],
+        notes: "BARDZO WAŻNE: Nie schodź zbyt nisko - zatrzymaj się gdy czujesz napięcie! Szczególnie delikatnie na lewe kolano - jeśli boli, zmniejsz zakres lub pomiń. Jeśli boli kolano, możesz pominąć to ćwiczenie."
+    },
+    "Wykroki": {
+        title: "WYKROKI Z HANTLAMI (płytkie, bezpieczne dla kolana)",
+        description: "Ćwiczenie trenuje uda i pośladki. Robisz krok do przodu i wracasz. WAŻNE: Płytkie wykroki - bez głębokiego zgięcia kolana!",
+        howTo: [
+            "Stań prosto, stopy na szerokość bioder",
+            "Weź hantle w obie ręce (lub trzymaj przy tułowiu) - możesz zacząć bez ciężaru",
+            "POWOLI zrób krok do przodu jedną nogą",
+            "KRÓTKI krok - nie za daleko!",
+            "PŁYTKIE zgięcie - obie nogi lekko ugięte",
+            "NIE schodź zbyt nisko! - zatrzymaj się gdy obie nogi są lekko ugięte",
+            "WAŻNE: Przednie kolano NIE powinno być zbyt zgięte!",
+            "POWOLI wróć do pozycji startowej, cofnij nogę",
+            "Zrób 10-12 powtórzeń na jedną nogę, potem zmień nogę"
+        ],
+        muscles: "Uda - przednie części, pośladki (główne), tylne części ud (pomocnicze)",
+        mistakes: [
+            "Zbyt głębokie zgięcie kolana (płytkie!)",
+            "Zbyt długi krok (krótki!)",
+            "Kolano przed stopą (kolano nad stopą!)",
+            "Szarpanie"
+        ],
+        notes: "BARDZO WAŻNE: Krótki wykrok, płytkie zgięcie - nie obciążaj zbyt mocno lewego kolana! Szczególnie delikatnie na lewą nogę - jeśli boli, zmniejsz zakres lub pomiń. Możesz robić bez hantli na początku. Jeśli boli kolano, możesz pominąć to ćwiczenie."
+    },
+    "Hip thrust": {
+        title: "UNOSZENIE BIODER (HIP THRUST) Z HANTLAMI",
+        description: "Ćwiczenie trenuje pośladki i tył ud. Podnosisz biodra z podłogi. Bezpieczne dla kolana! - kolana nie są zginane zbyt mocno.",
+        howTo: [
+            "Połóż się na plecach na podłodze",
+            "Zegnij nogi w kolanach, stopy płasko na podłodze (na szerokość bioder)",
+            "Ręce wzdłuż tułowia",
+            "Połóż hantlę na brzuchu (lub trzymaj przy tułowiu) - możesz zacząć bez ciężaru",
+            "POWOLI unieś biodra do góry",
+            "Napnij pośladki (ściśnij)",
+            "Unieś do momentu, gdy ciało tworzy linię prostą (od kolan do barków)",
+            "NIE unoś zbyt wysoko! - tylko do linii prostej",
+            "POWOLI opuszczaj biodra z powrotem",
+            "Nie kładź całkowicie - zatrzymaj się tuż nad podłogą"
+        ],
+        muscles: "Pośladki (główne), tylne części ud, plecy - dolna część (pomocnicze)",
+        mistakes: [
+            "Unoszenie zbyt wysoko (tylko do linii prostej!)",
+            "Zbyt szybkie ruchy",
+            "Nie napinanie pośladków (ZAWSZE napnij!)",
+            "Kładzenie całkowicie na podłogę (zatrzymaj tuż nad)"
+        ],
+        notes: "Bezpieczne dla kolana! - kolana nie są zginane zbyt mocno. Możesz robić bez hantli na początku. Jeśli masz hantlę, połóż ją na brzuchu. To świetne ćwiczenie - bezpieczne i skuteczne!"
+    },
+    "Unoszenie nóg": {
+        title: "UNOSZENIE NÓG W LEŻENIU (BRZUCH)",
+        description: "Ćwiczenie trenuje brzuch (dolne partie). Podnosisz nogi leżąc na plecach. Bezpieczne dla pleców (jeśli robisz prawidłowo).",
+        howTo: [
+            "Połóż się na plecach na podłodze",
+            "Ręce wzdłuż tułowia (lub pod pośladkami dla wsparcia)",
+            "Nogi wyprostowane (lub lekko ugięte)",
+            "POWOLI unieś nogi do góry",
+            "Napnij brzuch",
+            "Unieś do momentu, gdy nogi są prostopadle do podłogi (lub lekko niżej)",
+            "NIE unoś zbyt wysoko! - tylko do 90 stopni",
+            "POWOLI opuszczaj nogi z powrotem",
+            "NIE kładź całkowicie - zatrzymaj się tuż nad podłogą"
+        ],
+        muscles: "Brzuch - dolne partie (główne), górne partie brzucha (pomocnicze)",
+        mistakes: [
+            "Kładzenie nóg całkowicie (zatrzymaj tuż nad podłogą!)",
+            "Zbyt szybkie ruchy",
+            "Nie napinanie brzucha (ZAWSZE napnij!)",
+            "Wyginanie pleców (trzymaj plecy przy podłodze)"
+        ],
+        notes: "Możesz robić z lekko ugiętymi nogami (łatwiej). Jeśli boli plecy, połóż ręce pod pośladkami. Zacznij od mniejszej liczby powtórzeń (10-15)."
+    },
+    "Deska": {
+        title: "DESKA (PLANK)",
+        description: "Ćwiczenie trenuje cały brzuch i core (środek ciała). Trzymasz pozycję jak w pompkach, ale na przedramionach. Bardzo skuteczne dla stabilności.",
+        howTo: [
+            "Połóż się na brzuchu",
+            "Oprzyj się na przedramionach (łokcie pod barkami)",
+            "Dłonie na podłodze (lub zaciśnięte w pięści)",
+            "Unieś ciało - opierasz się na przedramionach i palcach stóp",
+            "Ciało w linii prostej (od głowy do stóp)",
+            "Napnij brzuch - jakbyś chciał wciągnąć pępek",
+            "Napnij pośladki - ściśnij",
+            "Trzymaj plecy proste - nie wyginaj w dół ani w górę!",
+            "Oddychaj spokojnie - wdech nosem, wydech ustami",
+            "Trzymaj 30-60 sekund",
+            "POWOLI opuść się na podłogę"
+        ],
+        muscles: "Brzuch - cały, core (główne), plecy, barki, pośladki (pomocnicze)",
+        mistakes: [
+            "Wyginanie pleców w dół (proste!)",
+            "Unoszenie bioder zbyt wysoko (linia prosta!)",
+            "Wstrzymywanie oddechu (oddychaj!)",
+            "Zbyt długie trzymanie na początku (zacznij od 20-30 sekund)"
+        ],
+        notes: "Zacznij od krótszego czasu (20-30 sekund). Możesz robić na kolanach (łatwiejsza wersja) - oprzyj się na kolanach zamiast palców stóp. Jeśli boli staw skokowy, możesz oprzeć się na kolanach. To świetne ćwiczenie - bezpieczne i skuteczne!"
+    }
+};
+
+// Słowniczek terminów
+const termDictionary = {
+    "Bawoli garb": {
+        title: "BAWOLI GARB (wdowi garb)",
+        description: "Bawoli garb (zwany też 'wdowi garb') to nadmierne wygięcie kręgosłupa w odcinku szyjnym i górnym piersiowym, powodujące wysunięcie głowy do przodu i zaokrąglenie górnej części pleców.",
+        causes: "Często spowodowany długotrwałym siedzeniem przy biurku, pracą przy komputerze, słabymi mięśniami pleców i szyi.",
+        effects: "Może powodować bóle szyi, głowy, górnej części pleców, ograniczenie ruchomości.",
+        exercises: [
+            "Ćwiczenie przy ścianie - 30-60s, 2-3x dziennie",
+            "Rozciąganie klatki piersiowej - 45s, 2-3x dziennie",
+            "Rozciąganie szyi - 30s, 2-3x dziennie",
+            "Wzmacnianie mięśni między łopatkami - 10-15 powtórzeń, 2-3x dziennie"
+        ],
+        notes: "WAŻNE: Zawsze utrzymuj prostą postawę podczas ćwiczeń - głowa w linii z kręgosłupem! Unikaj zaokrąglania pleców."
+    },
+    "RDL": {
+        title: "RDL (Rumunian Deadlift)",
+        description: "RDL to skrót od 'Rumunian Deadlift' (Rumuński Martwy Ciąg). To wariant martwego ciągu, który bardziej skupia się na tylnych częściach ud i pośladkach.",
+        difference: "W przeciwieństwie do klasycznego martwego ciągu, RDL wykonuje się z mniejszym zgięciem kolan i większym pochyleniem tułowia, co bardziej angażuje tyły ud.",
+        notes: "W Twoim planie RDL jest wykonywany z płytkim zakresem (tylko 30-45 stopni pochylenia) dla bezpieczeństwa kolan i stawu skokowego."
+    },
+    "Hip thrust": {
+        title: "HIP THRUST",
+        description: "Hip thrust to ćwiczenie polegające na unoszeniu bioder z podłogi w pozycji leżącej. Bardzo skuteczne dla wzmocnienia pośladków.",
+        why: "To ćwiczenie jest bezpieczne dla kolan, ponieważ kolana nie są zginane zbyt mocno. Idealne dla osób z problemami kolanowymi."
+    },
+    "Francuskie": {
+        title: "WYCISKANIE FRANCUSKIE",
+        description: "Wyciskanie francuskie to ćwiczenie na tricepsy (tył ramion), wykonywane przez zginanie rąk za głową.",
+        why: "Nazwa 'francuskie' pochodzi prawdopodobnie od francuskich kulturystów, którzy popularizowali to ćwiczenie."
+    }
+};
+
+let currentPlan = 'sebus';
+let currentDay = 1;
+
+function addTermLinks(text) {
+    if (!text) return text;
+    let result = text;
+    result = result.replace(/Bawoli garb/gi, (match) => {
+        return `<span class="dictionary-link" onclick="showTermDetails('Bawoli garb')">${match}</span>`;
+    });
+    result = result.replace(/RDL/gi, (match) => {
+        return `<span class="dictionary-link" onclick="showTermDetails('RDL')">${match}</span>`;
+    });
+    result = result.replace(/Hip thrust/gi, (match) => {
+        return `<span class="dictionary-link" onclick="showTermDetails('Hip thrust')">${match}</span>`;
+    });
+    result = result.replace(/francuskie/gi, (match) => {
+        return `<span class="dictionary-link" onclick="showTermDetails('Francuskie')">${match}</span>`;
+    });
+    return result;
+}
+
+function switchPlan(plan) {
+    currentPlan = plan;
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach((tab, index) => {
+        tab.classList.remove('active');
+        if ((plan === 'sebus' && index === 0) || (plan === 'kobieta' && index === 1)) {
+            tab.classList.add('active');
+        }
+    });
+    displayWorkout();
+}
+
+function selectDay(day) {
+    currentDay = day;
+    const dayBtns = document.querySelectorAll('.day-btn');
+    dayBtns.forEach((btn, index) => {
+        btn.classList.remove('active');
+        if (index === day - 1) {
+            btn.classList.add('active');
+        }
+    });
+    displayWorkout();
+}
+
+function displayWorkout() {
+    const plan = trainingData[currentPlan];
+    const day = plan.days[currentDay];
+    const content = document.getElementById('workout-content');
+
+    let html = `
+        <div class="workout-section">
+            <div class="section-title">🔥 Rozgrzewka: ${addTermLinks(day.warmup)}</div>
+        </div>
+
+        <div class="workout-section">
+            <div class="section-title">💪 Trening: ${day.name}</div>
+    `;
+
+    day.exercises.forEach((exercise, index) => {
+        const exerciseKey = exercise.name.split('(')[0].trim();
+        const hasDetails = exerciseDictionary[exerciseKey] || exerciseDictionary[exercise.name];
+        
+        html += `
+            <div class="exercise-item">
+                <div class="exercise-header">
+                    <div class="exercise-name">${index + 1}. ${exercise.name}</div>
+                    ${hasDetails ? `<a class="exercise-link" onclick="showExerciseDetails('${exercise.name}')">📖 Jak wykonać?</a>` : ''}
+                </div>
+                <div class="exercise-details">
+                    <strong>Serie:</strong> ${exercise.sets} | <strong>Przerwa:</strong> ${exercise.rest}
+                    ${exercise.weight ? ` | <strong>Ciężar:</strong> ${addTermLinks(exercise.weight)}` : ''}
+                    ${exercise.note ? `<br><em>${addTermLinks(exercise.note)}</em>` : ''}
+                    ${exercise.warning ? `<div class="warning">⚠️ ${addTermLinks(exercise.warning)}</div>` : ''}
+                    ${exercise.safe ? `<div class="safe">✅ ${addTermLinks(exercise.safe)}</div>` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+        </div>
+
+        <div class="workout-section">
+            <div class="section-title">🏃 Cardio: ${day.cardio}</div>
+        </div>
+
+        <div class="workout-section">
+            <div class="section-title">🧘 Rozciąganie: ${addTermLinks(day.stretching)}</div>
+        </div>
+    `;
+
+    html += `
+        <div class="workout-section">
+            <div class="section-title">ℹ️ Informacje o planie</div>
+            <div class="info-box">
+                <strong>Cel:</strong> ${plan.goal}<br>
+                <strong>Sprzęt:</strong> ${plan.equipment}<br>
+                <strong>Ograniczenia:</strong> ${addTermLinks(plan.limitations)}<br>
+                <strong>UNIKAJ:</strong> ${plan.avoid}
+            </div>
+        </div>
+    `;
+
+    content.innerHTML = html;
+}
+
+function showExerciseDetails(exerciseName) {
+    const exerciseKey = exerciseName.split('(')[0].trim();
+    const exercise = exerciseDictionary[exerciseKey] || exerciseDictionary[exerciseName];
+    
+    if (!exercise) {
+        alert('Szczegóły tego ćwiczenia będą wkrótce dostępne!');
+        return;
+    }
+
+    const modal = document.getElementById('exerciseModal');
+    const modalBody = document.getElementById('modal-body');
+
+    let html = `
+        <h2 class="modal-title">${exercise.title}</h2>
+        
+        <div class="modal-section">
+            <h3>Co to jest?</h3>
+            <p>${exercise.description}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Jak wykonać (krok po kroku):</h3>
+            <ol>
+    `;
+
+    exercise.howTo.forEach(step => {
+        html += `<li>${step}</li>`;
+    });
+
+    html += `
+            </ol>
+        </div>
+
+        <div class="modal-section">
+            <h3>Jakie mięśnie pracują:</h3>
+            <p>${exercise.muscles}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Typowe błędy (czego unikać):</h3>
+            <ul>
+    `;
+
+    exercise.mistakes.forEach(mistake => {
+        html += `<li>${mistake}</li>`;
+    });
+
+    html += `
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>Uwagi dla Ciebie:</h3>
+            <p>${exercise.notes}</p>
+        </div>
+    `;
+
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
+}
+
+function showTermDetails(term) {
+    const termData = termDictionary[term];
+    
+    if (!termData) {
+        alert('Szczegóły tego terminu będą wkrótce dostępne!');
+        return;
+    }
+
+    const modal = document.getElementById('exerciseModal');
+    const modalBody = document.getElementById('modal-body');
+
+    let html = `
+        <h2 class="modal-title">${termData.title}</h2>
+        
+        <div class="modal-section">
+            <h3>Co to jest?</h3>
+            <p>${termData.description}</p>
+        </div>
+    `;
+
+    if (termData.causes) {
+        html += `
+            <div class="modal-section">
+                <h3>Przyczyny:</h3>
+                <p>${termData.causes}</p>
+            </div>
+        `;
+    }
+
+    if (termData.effects) {
+        html += `
+            <div class="modal-section">
+                <h3>Efekty:</h3>
+                <p>${termData.effects}</p>
+            </div>
+        `;
+    }
+
+    if (termData.difference) {
+        html += `
+            <div class="modal-section">
+                <h3>Różnica:</h3>
+                <p>${termData.difference}</p>
+            </div>
+        `;
+    }
+
+    if (termData.why) {
+        html += `
+            <div class="modal-section">
+                <h3>Dlaczego?</h3>
+                <p>${termData.why}</p>
+            </div>
+        `;
+    }
+
+    if (termData.exercises) {
+        html += `
+            <div class="modal-section">
+                <h3>Ćwiczenia korekcyjne:</h3>
+                <ul>
+        `;
+        termData.exercises.forEach(ex => {
+            html += `<li>${ex}</li>`;
+        });
+        html += `
+                </ul>
+            </div>
+        `;
+    }
+
+    if (termData.notes) {
+        html += `
+            <div class="info-box">
+                <h3>Uwagi:</h3>
+                <p>${termData.notes}</p>
+            </div>
+        `;
+    }
+
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('exerciseModal').style.display = 'none';
+}
+
+// Zamknij modal po kliknięciu poza nim
+window.onclick = function(event) {
+    const modal = document.getElementById('exerciseModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Inicjalizacja
+displayWorkout();
