@@ -457,6 +457,95 @@ const exerciseDictionary = {
     }
 };
 
+// Słowniczek rozgrzewki i rozciągania
+const warmupDictionary = {
+    "Rozgrzewka": {
+        title: "🔥 ROZGRZEWKA - Szczegółowy Plan (10 minut)",
+        why: "Zapobiega kontuzjom (szczególnie przy Twoich ograniczeniach!), przygotowuje mięśnie i stawy do pracy, poprawia wyniki treningu o 30-40%. OBOWIĄZKOWE przed każdym treningiem!",
+        parts: [
+            {
+                name: "Część 1: Aktywacja krążeniowa (2-3 minuty)",
+                exercises: [
+                    "Spacer w miejscu - 1 minuta (tempo umiarkowane, podnoszenie kolan, UWAGA: Nie skacz, tylko maszeruj - bezpieczne dla stawu skokowego)",
+                    "Marsz z wymachami ramion - 1 minuta (maszeruj w miejscu, wymachuj ramionami do przodu i tyłu, intensywność lekka)"
+                ]
+            },
+            {
+                name: "Część 2: Mobilizacja stawów (3-4 minuty)",
+                exercises: [
+                    "Krążenia ramion (do przodu) - 2x20 każde ramię osobno (stań prosto, kręć ramieniem w pełnym zakresie, tempo wolne)",
+                    "Krążenia ramion (do tyłu) - 2x20 każde ramię (to samo, ale w przeciwną stronę)",
+                    "Krążenia ramion (oba jednocześnie) - 2x15 do przodu i do tyłu (oba ramiona razem, szerokie kręgi)",
+                    "Rotacje tułowia - 2x10 w każdą stronę (stopy na szerokość bioder, ręce na biodrach, skręty tułowia, UWAGA: Nie skręcaj zbyt mocno)",
+                    "Wymachy ramion (bokiem) - 2x15 (ramiona wyprostowane, wymachy na boki jak skrzydła)"
+                ]
+            },
+            {
+                name: "Część 3: Dynamiczne rozciąganie (2-3 minuty)",
+                exercises: [
+                    "Rozciąganie klatki piersiowej (w drzwiach/przy ścianie) - 2x30 sekund (oprzyj przedramię o framugę/ścianę, delikatnie skręć tułów, poczuj rozciąganie, UWAGA: Nie szarp)",
+                    "Rozciąganie tricepsów - 2x20 sekund każde ramię (zegnij ramię, dłoń za głową, drugą ręką pociągnij za łokieć)",
+                    "Rozciąganie barków (przez klatkę) - 2x20 sekund każde ramię (wyprostuj ramię przed sobą, drugą ręką pociągnij za łokieć w kierunku klatki)"
+                ]
+            },
+            {
+                name: "Część 4: Aktywacja mięśni (1-2 minuty)",
+                exercises: [
+                    "Dla treningów górnej części: Pompki na kolanach (lekko) - 1x10-15 (tylko rozgrzewka, nie do zmęczenia!)",
+                    "Dla treningów dolnej części: Unoszenie bioder (bez ciężaru) - 1x15 (tylko rozgrzewka), Lekkie wykroki (bez ciężaru) - 1x5 każda noga (UWAGA: Płytkie, bez głębokiego zgięcia!)"
+                ]
+            }
+        ],
+        summary: "Aktywacja krążeniowa: 2-3 min | Mobilizacja stawów: 3-4 min | Dynamiczne rozciąganie: 2-3 min | Aktywacja mięśni: 1-2 min | RAZEM: ~10 minut",
+        notes: "Rozgrzewka zmniejsza ryzyko kontuzji o 30-50%. Zawsze przed treningiem, nawet jeśli się spieszy. Szczególnie ważne przy Twoich ograniczeniach zdrowotnych!"
+    }
+};
+
+const stretchingDictionary = {
+    "Rozciąganie": {
+        title: "🧘 ROZCIĄGANIE - Szczegółowy Plan (5 minut)",
+        why: "Szybsza regeneracja (mniej bólu następnego dnia), zachowanie elastyczności, redukcja napięcia mięśniowego, lepszy sen. OBOWIĄZKOWE po każdym treningu!",
+        parts: [
+            {
+                name: "Część 1: Rozciąganie górnej części ciała (2 minuty)",
+                exercises: [
+                    "Rozciąganie klatki piersiowej (w drzwiach/przy ścianie) - 2x30 sekund każda strona (oprzyj przedramię o framugę/ścianę, delikatnie skręć tułów, oddychaj spokojnie, UWAGA: Nie szarp, trzymaj 30 sekund)",
+                    "Rozciąganie tricepsów - 2x30 sekund każde ramię (zegnij ramię, dłoń za głową, drugą ręką pociągnij za łokieć, oddychaj spokojnie)",
+                    "Rozciąganie bicepsów - 2x30 sekund każde ramię (wyprostuj ramię przed sobą, drugą ręką pociągnij za palce w dół, UWAGA: Delikatnie, nie szarp)",
+                    "Rozciąganie pleców (skłon) - 1x30 sekund (stań prosto, delikatnie pochyl się do przodu tylko do momentu rozciągania, UWAGA: Nie schylaj się zbyt nisko - bezpieczne dla stawu skokowego i kolana)",
+                    "Rozciąganie barków (przez klatkę) - 2x30 sekund każde ramię (wyprostuj ramię przed sobą, drugą ręką pociągnij za łokieć w kierunku klatki)"
+                ]
+            },
+            {
+                name: "Część 2: Rozciąganie dolnej części ciała (2 minuty)",
+                exercises: [
+                    "Rozciąganie mięśni czworogłowych (stojąc) - 2x30 sekund każda noga (stań na jednej nodze, trzymaj się dla równowagi, zegnij drugą nogę, chwyć za stopę, delikatnie pociągnij do pośladka, UWAGA: Szczególnie delikatnie na lewą nogę - kolano!)",
+                    "Rozciąganie mięśni tylnych uda (stojąc) - 2x30 sekund każda noga (postaw jedną nogę na podwyższeniu max 30-40cm, delikatnie pochyl się do przodu, UWAGA: Nie schylaj się zbyt nisko - bezpieczne dla kolana)",
+                    "Rozciąganie pośladków (siedząc) - 2x30 sekund każda strona (jedna noga zgięta, stopa na kolanie drugiej nogi, delikatnie pociągnij kolano do klatki, UWAGA: Jeśli boli kolano, zmniejsz zakres)",
+                    "Rozciąganie łydek (stojąc) - 2x30 sekund każda noga (stań w wykroku delikatnym, przenieś ciężar na przednią nogę, UWAGA: Szczególnie delikatnie na lewą nogę - staw skokowy!)"
+                ]
+            },
+            {
+                name: "Część 3: Rozciąganie brzucha i tułowia (1 minuta)",
+                exercises: [
+                    "Rozciąganie brzucha (leżąc na brzuchu) - 1x30 sekund (połóż się na brzuchu, oprzyj się na przedramionach, delikatnie unieś klatkę, UWAGA: Nie unoś zbyt wysoko)",
+                    "Rotacje tułowia (siedząc) - 2x20 sekund każda strona (jedna noga zgięta, stopa za kolanem drugiej nogi, skręć tułów, oprzyj się ręką o kolano)"
+                ]
+            }
+        ],
+        summary: "Rozciąganie górnej części: 2 min | Rozciąganie dolnej części: 2 min | Rozciąganie brzucha i tułowia: 1 min | RAZEM: ~5 minut",
+        rules: [
+            "Nie szarp! - Wszystkie ruchy delikatne i kontrolowane",
+            "Oddychaj! - Wdech nosem, wydech ustami, spokojnie",
+            "Trzymaj 30 sekund - To optymalny czas na rozciąganie",
+            "Słuchaj ciała - Jeśli boli, zmniejsz zakres lub pomiń",
+            "Szczególnie delikatnie: Lewe kolano (ból przy przykucu), Lewy staw skokowy (zerwany więzozrost)",
+            "Nie rozciągaj 'na siłę' - To nie powinno boleć, tylko delikatnie ciągnąć"
+        ],
+        notes: "Rozciąganie poprawia regenerację o 20-30%. Nawet 5 minut po treningu robi różnicę. Połączenie rozgrzewki i rozciągania = nawet 40% lepsze wyniki w treningu!"
+    }
+};
+
 // Słowniczek terminów
 const termDictionary = {
     "Bawoli garb": {
@@ -542,7 +631,10 @@ function displayWorkout() {
 
     let html = `
         <div class="workout-section">
-            <div class="section-title">🔥 Rozgrzewka: ${addTermLinks(day.warmup)}</div>
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>🔥 Rozgrzewka: ${addTermLinks(day.warmup)}</span>
+                <a class="exercise-link" onclick="showWarmupDetails()" style="margin-left: 10px;">📖 Jak wykonać?</a>
+            </div>
         </div>
 
         <div class="workout-section">
@@ -578,7 +670,10 @@ function displayWorkout() {
         </div>
 
         <div class="workout-section">
-            <div class="section-title">🧘 Rozciąganie: ${addTermLinks(day.stretching)}</div>
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>🧘 Rozciąganie: ${addTermLinks(day.stretching)}</span>
+                <a class="exercise-link" onclick="showStretchingDetails()" style="margin-left: 10px;">📖 Jak wykonać?</a>
+            </div>
         </div>
     `;
 
@@ -651,6 +746,109 @@ function showExerciseDetails(exerciseName) {
         <div class="info-box">
             <h3>Uwagi dla Ciebie:</h3>
             <p>${exercise.notes}</p>
+        </div>
+    `;
+
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
+}
+
+function showWarmupDetails() {
+    const warmup = warmupDictionary["Rozgrzewka"];
+    
+    const modal = document.getElementById('exerciseModal');
+    const modalBody = document.getElementById('modal-body');
+
+    let html = `
+        <h2 class="modal-title">${warmup.title}</h2>
+        
+        <div class="info-box">
+            <h3>Dlaczego to ważne:</h3>
+            <p>${warmup.why}</p>
+        </div>
+    `;
+
+    warmup.parts.forEach(part => {
+        html += `
+            <div class="modal-section">
+                <h3>${part.name}</h3>
+                <ul>
+        `;
+        part.exercises.forEach(ex => {
+            html += `<li>${ex}</li>`;
+        });
+        html += `
+                </ul>
+            </div>
+        `;
+    });
+
+    html += `
+        <div class="modal-section">
+            <h3>⏱️ Podsumowanie czasu:</h3>
+            <p><strong>${warmup.summary}</strong></p>
+        </div>
+
+        <div class="info-box">
+            <h3>Uwagi:</h3>
+            <p>${warmup.notes}</p>
+        </div>
+    `;
+
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
+}
+
+function showStretchingDetails() {
+    const stretching = stretchingDictionary["Rozciąganie"];
+    
+    const modal = document.getElementById('exerciseModal');
+    const modalBody = document.getElementById('modal-body');
+
+    let html = `
+        <h2 class="modal-title">${stretching.title}</h2>
+        
+        <div class="info-box">
+            <h3>Dlaczego to ważne:</h3>
+            <p>${stretching.why}</p>
+        </div>
+    `;
+
+    stretching.parts.forEach(part => {
+        html += `
+            <div class="modal-section">
+                <h3>${part.name}</h3>
+                <ul>
+        `;
+        part.exercises.forEach(ex => {
+            html += `<li>${ex}</li>`;
+        });
+        html += `
+                </ul>
+            </div>
+        `;
+    });
+
+    html += `
+        <div class="modal-section">
+            <h3>⏱️ Podsumowanie czasu:</h3>
+            <p><strong>${stretching.summary}</strong></p>
+        </div>
+
+        <div class="modal-section">
+            <h3>💡 Ważne zasady rozciągania:</h3>
+            <ul>
+    `;
+    stretching.rules.forEach(rule => {
+        html += `<li>${rule}</li>`;
+    });
+    html += `
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>Uwagi:</h3>
+            <p>${stretching.notes}</p>
         </div>
     `;
 
