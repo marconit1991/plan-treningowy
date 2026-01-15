@@ -1415,6 +1415,545 @@ window.onclick = function(event) {
     }
 }
 
+// Dzienniczek treningowy
+let trainingLog = {
+    sebus: {
+        startDate: '',
+        measurements: [],
+        workouts: []
+    },
+    kobieta: {
+        startDate: '',
+        measurements: [],
+        workouts: []
+    }
+};
+
+// Załaduj dzienniczek z localStorage
+function loadLog() {
+    const saved = localStorage.getItem('trainingLog');
+    if (saved) {
+        trainingLog = JSON.parse(saved);
+    }
+    // Ustaw datę rozpoczęcia jeśli jest zapisana
+    if (trainingLog.sebus.startDate) {
+        document.getElementById('start-date')?.setAttribute('value', trainingLog.sebus.startDate);
+    }
+}
+
+// Zapisz dzienniczek do localStorage
+function saveLog() {
+    localStorage.setItem('trainingLog', JSON.stringify(trainingLog));
+}
+
+function saveStartDate() {
+    const date = document.getElementById('start-date').value;
+    trainingLog[currentPlan].startDate = date;
+    saveLog();
+    updateStats();
+}
+
+function switchLogTab(tab) {
+    document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    document.getElementById('log-workout-tab').style.display = tab === 'workout' ? 'block' : 'none';
+    document.getElementById('log-measurement-tab').style.display = tab === 'measurement' ? 'block' : 'none';
+    document.getElementById('log-progress-tab').style.display = tab === 'progress' ? 'block' : 'none';
+    
+    if (tab === 'progress') {
+        updateStats();
+        drawCharts();
+    } else if (tab === 'workout') {
+        displayWorkoutEntries();
+    } else if (tab === 'measurement') {
+        displayMeasurementEntries();
+    }
+}
+
+function loadDayExercises() {
+    const day = parseInt(document.getElementById('workout-day').value);
+    const plan = trainingData[currentPlan];
+    const dayData = plan.days[day];
+    const container = document.getElementById('workout-exercises');
+    
+    let html = '<h4 style="margin-bottom: 10px;">Ćwiczenia:</h4>';
+    dayData.exercises.forEach(exercise => {
+        html += `
+            <div class="exercise-input-group">
+                <div class="exercise-input-name">${exercise.name}</div>
+                <div class="exercise-input-row">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="exercise-input-small">Serie x Powtórzenia:</label>
+                        <input type="text" class="exercise-input" data-exercise="${exercise.name}" data-field="sets" placeholder="${exercise.sets}">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="exercise-input-small">Ciężar (kg):</label>
+                        <input type="number" class="exercise-input" data-exercise="${exercise.name}" data-field="weight" step="0.5" placeholder="0">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="exercise-input-small">Uwagi:</label>
+                        <input type="text" class="exercise-input" data-exercise="${exercise.name}" data-field="notes" placeholder="Opcjonalnie">
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    // Dodaj cardio i rozciąganie
+    html += `
+        <div class="exercise-input-group">
+            <div class="exercise-input-name">Cardio</div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <input type="text" class="exercise-input" data-exercise="Cardio" data-field="notes" placeholder="${dayData.cardio}">
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+function saveWorkout() {
+    const date = document.getElementById('workout-date').value;
+    const day = parseInt(document.getElementById('workout-day').value);
+    
+    if (!date) {
+        alert('Wybierz datę treningu!');
+        return;
+    }
+    
+    const plan = trainingData[currentPlan];
+    const dayData = plan.days[day];
+    const exercises = [];
+    
+    dayData.exercises.forEach(exercise => {
+        const setsInput = document.querySelector(`input[data-exercise="${exercise.name}"][data-field="sets"]`);
+        const weightInput = document.querySelector(`input[data-exercise="${exercise.name}"][data-field="weight"]`);
+        const notesInput = document.querySelector(`input[data-exercise="${exercise.name}"][data-field="notes"]`);
+        
+        exercises.push({
+            name: exercise.name,
+            sets: setsInput?.value || exercise.sets,
+            weight: weightInput?.value || '',
+            notes: notesInput?.value || ''
+        });
+    });
+    
+    const cardioInput = document.querySelector('input[data-exercise="Cardio"]');
+    exercises.push({
+        name: 'Cardio',
+        sets: '',
+        weight: '',
+        notes: cardioInput?.value || dayData.cardio
+    });
+    
+    trainingLog[currentPlan].workouts.push({
+        date: date,
+        day: day,
+        dayName: dayData.name,
+        exercises: exercises
+    });
+    
+    saveLog();
+    displayWorkoutEntries();
+    
+    // Wyczyść formularz
+    document.getElementById('workout-date').value = '';
+    loadDayExercises();
+}
+
+function saveMeasurement() {
+    const date = document.getElementById('measurement-date').value;
+    const weight = document.getElementById('measurement-weight').value;
+    const chest = document.getElementById('measurement-chest').value;
+    const waist = document.getElementById('measurement-waist').value;
+    const hips = document.getElementById('measurement-hips').value;
+    const thigh = document.getElementById('measurement-thigh').value;
+    const notes = document.getElementById('measurement-notes').value;
+    
+    if (!date) {
+        alert('Wybierz datę pomiaru!');
+        return;
+    }
+    
+    trainingLog[currentPlan].measurements.push({
+        date: date,
+        weight: weight || '',
+        chest: chest || '',
+        waist: waist || '',
+        hips: hips || '',
+        thigh: thigh || '',
+        notes: notes || ''
+    });
+    
+    saveLog();
+    displayMeasurementEntries();
+    
+    // Wyczyść formularz
+    document.getElementById('measurement-date').value = '';
+    document.getElementById('measurement-weight').value = '';
+    document.getElementById('measurement-chest').value = '';
+    document.getElementById('measurement-waist').value = '';
+    document.getElementById('measurement-hips').value = '';
+    document.getElementById('measurement-thigh').value = '';
+    document.getElementById('measurement-notes').value = '';
+}
+
+function displayWorkoutEntries() {
+    const entries = trainingLog[currentPlan].workouts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const container = document.getElementById('workout-entries');
+    
+    if (entries.length === 0) {
+        container.innerHTML = '<div class="empty-log">Brak zapisanych treningów. Dodaj pierwszy trening!</div>';
+        return;
+    }
+    
+    let html = '';
+    entries.forEach(workout => {
+        html += `
+            <div class="log-entry">
+                <div class="log-entry-header">
+                    <div>
+                        <div class="log-entry-date">${formatDate(workout.date)}</div>
+                        <div class="log-entry-day">${workout.dayName}</div>
+                    </div>
+                    <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="deleteWorkout('${workout.date}', ${workout.day})">🗑️ Usuń</button>
+                </div>
+                <div style="margin-top: 10px;">
+        `;
+        
+        workout.exercises.forEach(ex => {
+            html += `
+                <div class="log-exercise">
+                    <div class="log-exercise-name">${ex.name}</div>
+                    <div class="log-exercise-details">
+                        ${ex.sets ? `<span><strong>Serie:</strong> ${ex.sets}</span>` : ''}
+                        ${ex.weight ? `<span><strong>Ciężar:</strong> ${ex.weight} kg</span>` : ''}
+                        ${ex.notes ? `<span><strong>Uwagi:</strong> ${ex.notes}</span>` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += `
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+function displayMeasurementEntries() {
+    const entries = trainingLog[currentPlan].measurements.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const container = document.getElementById('measurement-entries');
+    
+    if (entries.length === 0) {
+        container.innerHTML = '<div class="empty-log">Brak zapisanych pomiarów. Dodaj pierwszy pomiar!</div>';
+        return;
+    }
+    
+    let html = '';
+    entries.forEach(measurement => {
+        html += `
+            <div class="log-entry">
+                <div class="log-entry-header">
+                    <div class="log-entry-date">${formatDate(measurement.date)}</div>
+                    <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="deleteMeasurement('${measurement.date}')">🗑️ Usuń</button>
+                </div>
+                <div class="log-exercise-details" style="margin-top: 10px;">
+                    ${measurement.weight ? `<span><strong>Waga:</strong> ${measurement.weight} kg</span>` : ''}
+                    ${measurement.chest ? `<span><strong>Klatka:</strong> ${measurement.chest} cm</span>` : ''}
+                    ${measurement.waist ? `<span><strong>Talia:</strong> ${measurement.waist} cm</span>` : ''}
+                    ${measurement.hips ? `<span><strong>Biodra:</strong> ${measurement.hips} cm</span>` : ''}
+                    ${measurement.thigh ? `<span><strong>Udo:</strong> ${measurement.thigh} cm</span>` : ''}
+                </div>
+                ${measurement.notes ? `<div style="margin-top: 10px; color: #666; font-size: 14px;"><em>${measurement.notes}</em></div>` : ''}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+function deleteWorkout(date, day) {
+    if (confirm('Czy na pewno chcesz usunąć ten trening?')) {
+        trainingLog[currentPlan].workouts = trainingLog[currentPlan].workouts.filter(w => !(w.date === date && w.day === day));
+        saveLog();
+        displayWorkoutEntries();
+    }
+}
+
+function deleteMeasurement(date) {
+    if (confirm('Czy na pewno chcesz usunąć ten pomiar?')) {
+        trainingLog[currentPlan].measurements = trainingLog[currentPlan].measurements.filter(m => m.date !== date);
+        saveLog();
+        displayMeasurementEntries();
+    }
+}
+
+function updateStats() {
+    const plan = trainingLog[currentPlan];
+    const statsContainer = document.getElementById('stats-content');
+    
+    let html = '';
+    
+    if (plan.startDate) {
+        const startDate = new Date(plan.startDate);
+        const today = new Date();
+        const daysDiff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+        const weeks = Math.floor(daysDiff / 7);
+        const months = Math.floor(daysDiff / 30);
+        
+        html += `
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">${daysDiff}</div>
+                    <div class="stat-label">Dni treningu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${weeks}</div>
+                    <div class="stat-label">Tygodni</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${months}</div>
+                    <div class="stat-label">Miesięcy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${plan.workouts.length}</div>
+                    <div class="stat-label">Treningów</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${plan.measurements.length}</div>
+                    <div class="stat-label">Pomiarów</div>
+                </div>
+            </div>
+        `;
+    } else {
+        html = '<p style="color: #999;">Ustaw datę rozpoczęcia, aby zobaczyć statystyki.</p>';
+    }
+    
+    statsContainer.innerHTML = html;
+}
+
+function drawCharts() {
+    const plan = trainingLog[currentPlan];
+    const measurements = plan.measurements.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    // Wykres wagi
+    const weightCtx = document.getElementById('weight-chart');
+    if (weightCtx && measurements.length > 0) {
+        const weightData = measurements.filter(m => m.weight).map(m => ({ date: m.date, weight: parseFloat(m.weight) }));
+        
+        if (weightData.length > 0) {
+            // Prosty wykres liniowy używając Canvas API
+            const ctx = weightCtx.getContext('2d');
+            const width = weightCtx.width = weightCtx.offsetWidth;
+            const height = weightCtx.height = 300;
+            
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = currentPlan === 'sebus' ? '#082567' : '#dd9ecd';
+            ctx.fillStyle = currentPlan === 'sebus' ? '#082567' : '#dd9ecd';
+            ctx.lineWidth = 3;
+            
+            const padding = 40;
+            const chartWidth = width - padding * 2;
+            const chartHeight = height - padding * 2;
+            
+            const minWeight = Math.min(...weightData.map(d => d.weight));
+            const maxWeight = Math.max(...weightData.map(d => d.weight));
+            const weightRange = maxWeight - minWeight || 1;
+            
+            ctx.beginPath();
+            weightData.forEach((point, index) => {
+                const x = padding + (index / (weightData.length - 1 || 1)) * chartWidth;
+                const y = padding + chartHeight - ((point.weight - minWeight) / weightRange) * chartHeight;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            
+            // Punkty
+            weightData.forEach((point, index) => {
+                const x = padding + (index / (weightData.length - 1 || 1)) * chartWidth;
+                const y = padding + chartHeight - ((point.weight - minWeight) / weightRange) * chartHeight;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+            
+            // Osie i etykiety
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.fillText('Waga (kg)', padding, padding - 10);
+            ctx.fillText(weightData[0].date, padding, height - padding + 20);
+            if (weightData.length > 1) {
+                ctx.fillText(weightData[weightData.length - 1].date, width - padding - 60, height - padding + 20);
+            }
+        } else {
+            weightCtx.getContext('2d').fillStyle = '#999';
+            weightCtx.getContext('2d').font = '16px Arial';
+            weightCtx.getContext('2d').fillText('Brak danych o wadze', 20, 150);
+        }
+    }
+    
+    // Wykres obwodów
+    const measurementsCtx = document.getElementById('measurements-chart');
+    if (measurementsCtx && measurements.length > 0) {
+        const measurementsData = measurements.filter(m => m.chest || m.waist || m.hips || m.thigh);
+        
+        if (measurementsData.length > 0) {
+            const ctx = measurementsCtx.getContext('2d');
+            const width = measurementsCtx.width = measurementsCtx.offsetWidth;
+            const height = measurementsCtx.height = 300;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            const padding = 40;
+            const chartWidth = width - padding * 2;
+            const chartHeight = height - padding * 2;
+            
+            const allValues = [];
+            measurementsData.forEach(m => {
+                if (m.chest) allValues.push(parseFloat(m.chest));
+                if (m.waist) allValues.push(parseFloat(m.waist));
+                if (m.hips) allValues.push(parseFloat(m.hips));
+                if (m.thigh) allValues.push(parseFloat(m.thigh));
+            });
+            
+            const minValue = Math.min(...allValues);
+            const maxValue = Math.max(...allValues);
+            const valueRange = maxValue - minValue || 1;
+            
+            const colors = ['#082567', '#dd9ecd', '#27ae60', '#e74c3c'];
+            const labels = ['Klatka', 'Talia', 'Biodra', 'Udo'];
+            const fields = ['chest', 'waist', 'hips', 'thigh'];
+            
+            fields.forEach((field, fieldIndex) => {
+                const fieldData = measurementsData.filter(m => m[field]).map(m => ({ date: m.date, value: parseFloat(m[field]) }));
+                
+                if (fieldData.length > 0) {
+                    ctx.strokeStyle = currentPlan === 'sebus' ? colors[fieldIndex] : colors[fieldIndex];
+                    ctx.fillStyle = currentPlan === 'sebus' ? colors[fieldIndex] : colors[fieldIndex];
+                    ctx.lineWidth = 2;
+                    
+                    ctx.beginPath();
+                    fieldData.forEach((point, index) => {
+                        const x = padding + (index / (fieldData.length - 1 || 1)) * chartWidth;
+                        const y = padding + chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
+                        
+                        if (index === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    });
+                    ctx.stroke();
+                }
+            });
+            
+            // Osie
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.fillText('Obwody (cm)', padding, padding - 10);
+        } else {
+            measurementsCtx.getContext('2d').fillStyle = '#999';
+            measurementsCtx.getContext('2d').font = '16px Arial';
+            measurementsCtx.getContext('2d').fillText('Brak danych o obwodach', 20, 150);
+        }
+    }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function exportToCSV() {
+    const plan = trainingLog[currentPlan];
+    const name = currentPlan === 'sebus' ? 'Sebuś' : 'Alusia';
+    
+    let csv = `Dzienniczek treningowy - ${name}\n\n`;
+    
+    // Pomiary
+    csv += 'POMIARY\n';
+    csv += 'Data,Waga (kg),Obwód klatki (cm),Obwód talii (cm),Obwód bioder (cm),Obwód uda (cm),Notatki\n';
+    plan.measurements.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(m => {
+        csv += `${m.date},${m.weight || ''},${m.chest || ''},${m.waist || ''},${m.hips || ''},${m.thigh || ''},"${m.notes || ''}"\n`;
+    });
+    
+    csv += '\n\nTRENINGI\n';
+    csv += 'Data,Dzień treningu,Ćwiczenie,Serie x Powtórzenia,Ciężar (kg),Uwagi\n';
+    plan.workouts.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(workout => {
+        workout.exercises.forEach(ex => {
+            csv += `${workout.date},"${workout.dayName}","${ex.name}","${ex.sets || ''}","${ex.weight || ''}","${ex.notes || ''}"\n`;
+        });
+    });
+    
+    // Pobierz jako plik
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `dzienniczek_${name}_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function showLog() {
+    // Ukryj trening, pokaż dzienniczek
+    document.getElementById('workout-content').style.display = 'none';
+    document.getElementById('log-content').style.display = 'block';
+    
+    // Zmień aktywne zakładki
+    document.querySelectorAll('.tab').forEach(tab => {
+        if (tab.textContent.includes('Dzienniczek')) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+    
+    // Ustaw domyślną datę na dzisiaj
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('workout-date').value = today;
+    document.getElementById('measurement-date').value = today;
+    
+    // Załaduj ćwiczenia dla pierwszego dnia
+    loadDayExercises();
+    displayWorkoutEntries();
+    displayMeasurementEntries();
+    
+    // Ustaw datę rozpoczęcia jeśli jest zapisana
+    if (trainingLog[currentPlan].startDate) {
+        document.getElementById('start-date').value = trainingLog[currentPlan].startDate;
+    }
+}
+
 // Inicjalizacja
 document.body.classList.add('plan-sebus'); // Domyślnie niebieski dla Sebusia
+loadLog();
 displayWorkout();
