@@ -1029,9 +1029,120 @@ function displayWorkout() {
                 <a class="exercise-link" onclick="showStretchingDetails()">📖 Jak wykonać?</a>
             </div>
         </div>
+
+        <div class="workout-section">
+            <button class="log-toggle-btn" onclick="toggleLog()" style="width: 100%;">
+                📊 Dzienniczek treningowy
+            </button>
+        </div>
+
+        <div class="workout-section" id="log-section" style="display: none;">
+            <button class="log-toggle-btn" onclick="toggleLog()" style="width: 100%;">
+                ← Powrót do treningu
+            </button>
+            
+            <div class="log-tabs">
+                <button class="log-tab active" onclick="switchLogTab('workout')">💪 Treningi</button>
+                <button class="log-tab" onclick="switchLogTab('measurement')">📏 Pomiary</button>
+                <button class="log-tab" onclick="switchLogTab('progress')">📈 Postępy</button>
+            </div>
+            
+            <div id="log-workout-tab">
+                <div class="log-form">
+                    <h3>Dodaj trening</h3>
+                    <div class="form-group">
+                        <label>Data treningu:</label>
+                        <input type="date" id="workout-date" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Dzień treningu:</label>
+                        <select id="workout-day" onchange="loadDayExercises()">
+                            <option value="1">Dzień 1 - Górna część (Push)</option>
+                            <option value="2">Dzień 2 - Dolna część</option>
+                            <option value="3">Dzień 3 - Górna część (Pull)</option>
+                            <option value="4">Dzień 4 - Full Body</option>
+                        </select>
+                    </div>
+                    <div id="workout-exercises"></div>
+                    <button class="btn btn-primary" onclick="saveWorkout()" style="margin-top: 15px;">💾 Zapisz trening</button>
+                </div>
+                <div class="log-entries" id="workout-entries"></div>
+            </div>
+            
+            <div id="log-measurement-tab" style="display: none;">
+                <div class="log-form">
+                    <h3>Dodaj pomiar</h3>
+                    <div class="form-group">
+                        <label>Data pomiaru:</label>
+                        <input type="date" id="measurement-date" value="">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Waga (kg):</label>
+                            <input type="number" id="measurement-weight" step="0.1" placeholder="np. 85.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Obwód klatki (cm):</label>
+                            <input type="number" id="measurement-chest" step="0.5" placeholder="np. 100">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Obwód talii (cm):</label>
+                            <input type="number" id="measurement-waist" step="0.5" placeholder="np. 90">
+                        </div>
+                        <div class="form-group">
+                            <label>Obwód bioder (cm):</label>
+                            <input type="number" id="measurement-hips" step="0.5" placeholder="np. 100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Obwód uda (cm):</label>
+                        <input type="number" id="measurement-thigh" step="0.5" placeholder="np. 60">
+                    </div>
+                    <div class="form-group">
+                        <label>Notatki:</label>
+                        <textarea id="measurement-notes" placeholder="Dodatkowe uwagi..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveMeasurement()">💾 Zapisz pomiar</button>
+                </div>
+                <div class="log-entries" id="measurement-entries"></div>
+            </div>
+            
+            <div id="log-progress-tab" style="display: none;">
+                <div class="log-form">
+                    <h3>Ustawienia</h3>
+                    <div class="form-group">
+                        <label>Data rozpoczęcia treningów:</label>
+                        <input type="date" id="start-date" onchange="saveStartDate()">
+                    </div>
+                    <div id="training-stats" style="margin-top: 20px; padding: 20px;">
+                        <h4>Statystyki treningów</h4>
+                        <div id="stats-content"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h3 style="margin-bottom: 15px; color: #333;">Wykresy postępów</h3>
+                    <canvas id="weight-chart" style="max-width: 100%; height: 300px; margin-bottom: 20px; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></canvas>
+                    <canvas id="measurements-chart" style="max-width: 100%; height: 300px; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></canvas>
+                </div>
+            </div>
+            
+            <div style="margin-top: 25px;">
+                <button class="btn btn-secondary export-btn" onclick="exportToCSV()" style="width: 100%;">📥 Eksportuj do CSV</button>
+            </div>
+        </div>
     `;
 
     content.innerHTML = html;
+    
+    // Załaduj datę rozpoczęcia jeśli jest zapisana
+    if (trainingLog[currentPlan] && trainingLog[currentPlan].startDate) {
+        const startDateInput = document.getElementById('start-date');
+        if (startDateInput) {
+            startDateInput.value = trainingLog[currentPlan].startDate;
+        }
+    }
 }
 
 function togglePlanInfo() {
@@ -1094,11 +1205,11 @@ function showCardioDetails() {
 
     cardio.exercises.forEach(ex => {
         html += `
-            <div style="margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
-                <h4 style="color: #333; margin-bottom: 10px;">${ex.name}</h4>
-                <p style="color: #666; margin-bottom: 10px;">${ex.description}</p>
-                <strong>Jak wykonać:</strong>
-                <ol style="margin-left: 20px; margin-top: 5px;">
+            <div class="modal-section" style="margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-radius: 12px; border-left: 4px solid #667eea;">
+                <h4 style="color: #333; margin-bottom: 10px; font-size: 18px;">${ex.name}</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.6;">${ex.description}</p>
+                <h4 style="color: #333; margin-bottom: 10px; font-size: 16px; margin-top: 15px;">Jak wykonać (krok po kroku):</h4>
+                <ol style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
         `;
         ex.howTo.forEach(step => {
             // Usuń podwójne wypunktowania (kropki i myślniki)
@@ -1109,13 +1220,15 @@ function showCardioDetails() {
             if (cleanStep.startsWith('-')) {
                 cleanStep = cleanStep.substring(1).trim();
             }
-            html += `<li style="margin-bottom: 5px;">${cleanStep}</li>`;
+            html += `<li style="margin-bottom: 8px;">${cleanStep}</li>`;
         });
         html += `
                 </ol>
-                <p style="margin-top: 10px;"><strong>Czas:</strong> ${ex.time}</p>
-                <p><strong>Intensywność:</strong> ${ex.intensity}</p>
-                <p style="color: #27ae60; margin-top: 10px;"><strong>Uwagi:</strong> ${ex.notes}</p>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <p style="margin-bottom: 5px;"><strong>Czas:</strong> ${ex.time}</p>
+                    <p style="margin-bottom: 5px;"><strong>Intensywność:</strong> ${ex.intensity}</p>
+                    <p style="color: #27ae60; margin-top: 10px;"><strong>Uwagi:</strong> ${ex.notes}</p>
+                </div>
             </div>
         `;
     });
@@ -1129,9 +1242,9 @@ function showCardioDetails() {
 
     cardio.plans.forEach(plan => {
         html += `
-            <div style="margin-bottom: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
-                <h4 style="color: #333; margin-bottom: 10px;">${plan.name}</h4>
-                <ol style="margin-left: 20px;">
+            <div class="modal-section" style="margin-bottom: 20px; padding: 20px; background: #e8f4f8; border-radius: 12px; border-left: 4px solid #3498db;">
+                <h4 style="color: #333; margin-bottom: 15px; font-size: 18px;">${plan.name}</h4>
+                <ol style="margin-left: 20px; line-height: 1.8;">
         `;
         plan.exercises.forEach(ex => {
             // Usuń podwójne wypunktowania (kropki i myślniki)
@@ -1142,7 +1255,7 @@ function showCardioDetails() {
             if (cleanEx.startsWith('-')) {
                 cleanEx = cleanEx.substring(1).trim();
             }
-            html += `<li style="margin-bottom: 5px;">${cleanEx}</li>`;
+            html += `<li style="margin-bottom: 8px;">${cleanEx}</li>`;
         });
         html += `
                 </ol>
@@ -1217,9 +1330,9 @@ function showExerciseDetails(exerciseName) {
             currentOption = trimmedStep;
             inOption = true;
             html += `
-                <div style="margin-top: 15px; margin-bottom: 10px;">
-                    <h4 style="font-weight: 700; color: #667eea; margin-bottom: 8px;">${trimmedStep}</h4>
-                    <ol start="${stepNumber}">
+                <div style="margin-top: 20px; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-radius: 10px; border-left: 4px solid #667eea;">
+                    <h4 style="font-weight: 700; color: #667eea; margin-bottom: 12px; font-size: 16px;">${trimmedStep}</h4>
+                    <ol start="${stepNumber}" style="line-height: 1.8;">
             `;
             stepNumber++;
         } else {
@@ -1308,7 +1421,7 @@ function showWarmupDetails() {
         html += `
             <div class="modal-section">
                 <h3>${part.name}</h3>
-                <ul>
+                <ol>
         `;
         part.exercises.forEach(ex => {
             // Usuń podwójne wypunktowania (kropki i myślniki)
@@ -1322,7 +1435,7 @@ function showWarmupDetails() {
             html += `<li>${cleanEx}</li>`;
         });
         html += `
-                </ul>
+                </ol>
             </div>
         `;
     });
@@ -1362,7 +1475,7 @@ function showStretchingDetails() {
         html += `
             <div class="modal-section">
                 <h3>${part.name}</h3>
-                <ul>
+                <ol>
         `;
         part.exercises.forEach(ex => {
             // Usuń podwójne wypunktowania (kropki i myślniki)
@@ -1376,7 +1489,7 @@ function showStretchingDetails() {
             html += `<li>${cleanEx}</li>`;
         });
         html += `
-                </ul>
+                </ol>
             </div>
         `;
     });
@@ -1704,32 +1817,38 @@ function displayWorkoutEntries() {
     const container = document.getElementById('workout-entries');
     
     if (entries.length === 0) {
-        container.innerHTML = '<div class="empty-log">Brak zapisanych treningów. Dodaj pierwszy trening!</div>';
+        container.innerHTML = `
+            <div class="empty-log">
+                <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #333;">Brak zapisanych treningów</div>
+                <div style="color: #999;">Dodaj pierwszy trening używając formularza powyżej!</div>
+            </div>
+        `;
         return;
     }
     
-    let html = '';
+    let html = '<div style="display: grid; gap: 20px;">';
     entries.forEach(workout => {
         html += `
             <div class="log-entry">
                 <div class="log-entry-header">
-                    <div>
+                    <div style="flex: 1;">
                         <div class="log-entry-date">${formatDate(workout.date)}</div>
                         <div class="log-entry-day">${workout.dayName}</div>
                     </div>
-                    <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="deleteWorkout('${workout.date}', ${workout.day})">🗑️ Usuń</button>
+                    <button class="btn btn-secondary btn-small" onclick="deleteWorkout('${workout.date}', ${workout.day})" style="opacity: 0.7;">🗑️</button>
                 </div>
-                <div style="margin-top: 10px;">
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
         `;
         
-        workout.exercises.forEach(ex => {
+        workout.exercises.forEach((ex, idx) => {
             html += `
-                <div class="log-exercise">
+                <div class="log-exercise" style="${idx < workout.exercises.length - 1 ? 'margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f5f5f5;' : ''}">
                     <div class="log-exercise-name">${ex.name}</div>
                     <div class="log-exercise-details">
-                        ${ex.sets ? `<span><strong>Serie:</strong> ${ex.sets}</span>` : ''}
-                        ${ex.weight ? `<span><strong>Ciężar:</strong> ${ex.weight} kg</span>` : ''}
-                        ${ex.notes ? `<span><strong>Uwagi:</strong> ${ex.notes}</span>` : ''}
+                        ${ex.sets ? `<div class="log-detail-badge"><span class="log-detail-label">Serie:</span> <span class="log-detail-value">${ex.sets}</span></div>` : ''}
+                        ${ex.weight ? `<div class="log-detail-badge"><span class="log-detail-label">Ciężar:</span> <span class="log-detail-value">${ex.weight} kg</span></div>` : ''}
+                        ${ex.notes ? `<div class="log-detail-badge log-notes"><span class="log-detail-label">Uwagi:</span> <span class="log-detail-value">${ex.notes}</span></div>` : ''}
                     </div>
                 </div>
             `;
@@ -1740,6 +1859,7 @@ function displayWorkoutEntries() {
             </div>
         `;
     });
+    html += '</div>';
     
     container.innerHTML = html;
 }
@@ -1749,29 +1869,38 @@ function displayMeasurementEntries() {
     const container = document.getElementById('measurement-entries');
     
     if (entries.length === 0) {
-        container.innerHTML = '<div class="empty-log">Brak zapisanych pomiarów. Dodaj pierwszy pomiar!</div>';
+        container.innerHTML = `
+            <div class="empty-log">
+                <div style="font-size: 48px; margin-bottom: 15px;">📏</div>
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #333;">Brak zapisanych pomiarów</div>
+                <div style="color: #999;">Dodaj pierwszy pomiar używając formularza powyżej!</div>
+            </div>
+        `;
         return;
     }
     
-    let html = '';
+    let html = '<div style="display: grid; gap: 20px;">';
     entries.forEach(measurement => {
         html += `
             <div class="log-entry">
                 <div class="log-entry-header">
                     <div class="log-entry-date">${formatDate(measurement.date)}</div>
-                    <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="deleteMeasurement('${measurement.date}')">🗑️ Usuń</button>
+                    <button class="btn btn-secondary btn-small" onclick="deleteMeasurement('${measurement.date}')" style="opacity: 0.7;">🗑️</button>
                 </div>
-                <div class="log-exercise-details" style="margin-top: 10px;">
-                    ${measurement.weight ? `<span><strong>Waga:</strong> ${measurement.weight} kg</span>` : ''}
-                    ${measurement.chest ? `<span><strong>Klatka:</strong> ${measurement.chest} cm</span>` : ''}
-                    ${measurement.waist ? `<span><strong>Talia:</strong> ${measurement.waist} cm</span>` : ''}
-                    ${measurement.hips ? `<span><strong>Biodra:</strong> ${measurement.hips} cm</span>` : ''}
-                    ${measurement.thigh ? `<span><strong>Udo:</strong> ${measurement.thigh} cm</span>` : ''}
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
+                        ${measurement.weight ? `<div class="measurement-card"><div class="measurement-label">Waga</div><div class="measurement-value">${measurement.weight} <span class="measurement-unit">kg</span></div></div>` : ''}
+                        ${measurement.chest ? `<div class="measurement-card"><div class="measurement-label">Klatka</div><div class="measurement-value">${measurement.chest} <span class="measurement-unit">cm</span></div></div>` : ''}
+                        ${measurement.waist ? `<div class="measurement-card"><div class="measurement-label">Talia</div><div class="measurement-value">${measurement.waist} <span class="measurement-unit">cm</span></div></div>` : ''}
+                        ${measurement.hips ? `<div class="measurement-card"><div class="measurement-label">Biodra</div><div class="measurement-value">${measurement.hips} <span class="measurement-unit">cm</span></div></div>` : ''}
+                        ${measurement.thigh ? `<div class="measurement-card"><div class="measurement-label">Udo</div><div class="measurement-value">${measurement.thigh} <span class="measurement-unit">cm</span></div></div>` : ''}
+                    </div>
+                    ${measurement.notes ? `<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #f0f0f0; color: #666; font-size: 14px; font-style: italic;">💬 ${measurement.notes}</div>` : ''}
                 </div>
-                ${measurement.notes ? `<div style="margin-top: 10px; color: #666; font-size: 14px;"><em>${measurement.notes}</em></div>` : ''}
             </div>
         `;
     });
+    html += '</div>';
     
     container.innerHTML = html;
 }
@@ -2023,41 +2152,39 @@ function exportToCSV() {
     document.body.removeChild(link);
 }
 
-function showLog() {
-    // Ukryj trening, pokaż dzienniczek
-    const workoutContent = document.getElementById('workout-content');
-    const logContent = document.getElementById('log-content');
+function toggleLog() {
+    const logSection = document.getElementById('log-section');
+    const workoutSections = document.querySelectorAll('.workout-section:not(#log-section)');
     const daySelector = document.querySelector('.day-selector');
     
-    if (workoutContent) workoutContent.style.display = 'none';
-    if (logContent) logContent.style.display = 'block';
-    if (daySelector) daySelector.style.display = 'none';
-    
-    // Zmień aktywne zakładki
-    document.querySelectorAll('.tab').forEach(tab => {
-        if (tab.textContent.includes('Dzienniczek')) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
+    if (logSection.style.display === 'none' || !logSection.style.display) {
+        // Pokaż dzienniczek, ukryj trening
+        logSection.style.display = 'block';
+        workoutSections.forEach(section => section.style.display = 'none');
+        if (daySelector) daySelector.style.display = 'none';
+        
+        // Ustaw domyślną datę na dzisiaj
+        const today = new Date().toISOString().split('T')[0];
+        const workoutDateInput = document.getElementById('workout-date');
+        const measurementDateInput = document.getElementById('measurement-date');
+        if (workoutDateInput) workoutDateInput.value = today;
+        if (measurementDateInput) measurementDateInput.value = today;
+        
+        // Załaduj ćwiczenia dla pierwszego dnia
+        loadDayExercises();
+        displayWorkoutEntries();
+        displayMeasurementEntries();
+        
+        // Ustaw datę rozpoczęcia jeśli jest zapisana
+        const startDateInput = document.getElementById('start-date');
+        if (startDateInput && trainingLog[currentPlan] && trainingLog[currentPlan].startDate) {
+            startDateInput.value = trainingLog[currentPlan].startDate;
         }
-    });
-    
-    // Ustaw domyślną datę na dzisiaj
-    const today = new Date().toISOString().split('T')[0];
-    const workoutDateInput = document.getElementById('workout-date');
-    const measurementDateInput = document.getElementById('measurement-date');
-    if (workoutDateInput) workoutDateInput.value = today;
-    if (measurementDateInput) measurementDateInput.value = today;
-    
-    // Załaduj ćwiczenia dla pierwszego dnia
-    loadDayExercises();
-    displayWorkoutEntries();
-    displayMeasurementEntries();
-    
-    // Ustaw datę rozpoczęcia jeśli jest zapisana
-    const startDateInput = document.getElementById('start-date');
-    if (startDateInput && trainingLog[currentPlan] && trainingLog[currentPlan].startDate) {
-        startDateInput.value = trainingLog[currentPlan].startDate;
+    } else {
+        // Pokaż trening, ukryj dzienniczek
+        logSection.style.display = 'none';
+        workoutSections.forEach(section => section.style.display = 'block');
+        if (daySelector) daySelector.style.display = 'grid';
     }
 }
 
