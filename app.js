@@ -129,23 +129,40 @@ const trainingData = {
 // Słowniczek ćwiczeń - szczegółowe opisy (skrócona wersja)
 const exerciseDictionary = {
     "Wyciskanie hantli": {
-        title: "WYCISKANIE HANTLI",
-        description: "Ćwiczenie trenuje klatkę piersiową. Podobne do pompek, ale leżąc z hantlami.",
+        title: "WYCISKANIE HANTLI NA ŁAWCE/ŁÓŻKU (lub bez ławki - rozwiązania)",
+        description: "Ćwiczenie trenuje klatkę piersiową (mięśnie piersiowe). Podobne do pompek, ale leżąc z hantlami. WAŻNE: Łokcie muszą być poniżej ciała dla pełnego zakresu ruchu!",
         howTo: [
-            "Opcja A (NAJŁATWIEJSZE): Użyj 2-3 grubych poduszek pod plecami (wysokość 15-25 cm)",
-            "Połóż się na plecach na poduszkach, nogi zgięte w kolanach",
-            "Weź hantle w obie ręce, unieś nad klatkę piersiową",
-            "POWOLI opuszczaj hantle na boki - łokcie muszą być poniżej poziomu ciała!",
-            "POWOLI podnoś hantle z powrotem do góry"
+            "OPCJA A: Użyj poduszek/koców (NAJŁATWIEJSZE) ⭐",
+            "• Przygotowanie: Weź 2-3 grube poduszki lub złożone koce, ułóż na podłodze (jedna na drugiej), wysokość 15-25 cm, sprawdź stabilność",
+            "• Pozycja: Połóż się na plecach na poduszkach, głowa i górna część pleców na poduszkach, dolna część pleców i biodra na podłodze, nogi zgięte w kolanach, stopy na podłodze",
+            "• Weź hantle w obie ręce, unieś nad klatkę piersiową, ramiona wyprostowane (ale lekko ugięte w łokciach), dłonie skierowane do przodu",
+            "• Ruch w dół: POWOLI opuszczaj hantle na boki, zegnij ręce w łokciach, opuszczaj do momentu gdy łokcie są poniżej poziomu ciała (WAŻNE!), poczuj rozciąganie w klatce, NIE opuszczaj zbyt nisko - zatrzymaj się gdy ramiona są równolegle do podłogi",
+            "• Ruch w górę: POWOLI podnoś hantle z powrotem do góry, wyprostuj ręce (ale nie do końca - zostaw lekko ugięte), wydech przy podnoszeniu",
+            "",
+            "OPCJA B: Użyj dwóch krzeseł",
+            "• Przygotowanie: Weź dwa stabilne krzesła, ustaw równolegle (oparcia do siebie), odległość na szerokość barków, sprawdź stabilność",
+            "• Pozycja: Połóż się na plecach między krzesłami, głowa i górna część pleców na oparciach krzeseł, dolna część pleców i biodra między krzesłami (na podłodze lub poduszkach), nogi zgięte w kolanach",
+            "• Ruch: Tak samo jak w Opcji A",
+            "",
+            "OPCJA C: Użyj łóżka (jeśli masz twarde łóżko)",
+            "• Przygotowanie: Jeśli masz twarde łóżko (nie za miękkie), możesz użyć go jako ławki, sprawdź czy jest stabilne i nie zapada się",
+            "• Pozycja: Połóż się na plecach na łóżku, głowa i górna część pleców na łóżku, nogi zgięte w kolanach (stopy na podłodze lub na łóżku)",
+            "• Ruch: Tak samo jak w Opcji A",
+            "",
+            "OPCJA D: Na podłodze (jeśli nie masz nic innego)",
+            "• UWAGA: Na podłodze łokcie NIE będą poniżej ciała, więc zakres ruchu jest ograniczony",
+            "• To nie jest idealne, ale lepsze niż nic",
+            "• Połóż się na plecach, zgięte nogi, opuszczaj hantle na boki (zatrzymaj się gdy ramiona są równolegle do podłogi)"
         ],
-        muscles: "Klatka piersiowa (główne), tricepsy, barki (pomocnicze)",
+        muscles: "Główne: Klatka piersiowa (mięśnie piersiowe większe). Pomocnicze: Tricepsy (tył ramion), przednie części barków",
         mistakes: [
             "Opuszczanie zbyt nisko (może uszkodzić barki)",
             "Szarpanie hantlami (kontrolowane ruchy!)",
-            "Zbyt szybkie ruchy",
-            "Niestabilne podparcie"
+            "Zbyt szybkie ruchy (powoli w dół, powoli w górę)",
+            "Wyginanie pleców (trzymaj plecy stabilnie)",
+            "Niestabilne podparcie (sprawdź czy poduszki/krzesła są stabilne!)"
         ],
-        notes: "NAJLEPSZE: Opcja A (poduszki). Zacznij od lżejszych hantli. Sprawdź stabilność przed rozpoczęciem."
+        notes: "NAJLEPSZE: Opcja A (poduszki/kocyki) - łatwe, bezpieczne, skuteczne. Zacznij od lżejszych hantli (10-15kg łącznie). Sprawdź stabilność przed rozpoczęciem. Poproś asekuranta o obserwację techniki. Jeśli nie masz nic, użyj Opcji D (podłoga) - lepsze niż nic!"
     },
     "Wyciskanie nad głową": {
         title: "WYCISKANIE NAD GŁOWĄ",
@@ -167,23 +184,38 @@ const exerciseDictionary = {
         notes: "Siedząc jest bezpieczniejsze dla pleców. Zacznij od lżejszych hantli."
     },
     "Rozpiętki": {
-        title: "ROZPIĘTKI Z HANTLAMI",
-        description: "Ćwiczenie rozciąga i wzmacnia klatkę piersiową. Ruch podobny do przytulania, ale z hantlami.",
+        title: "ROZPIĘTKI Z HANTLAMI (na ławce/podłodze)",
+        description: "Ćwiczenie rozciąga i wzmacnia klatkę piersiową. Ruch podobny do przytulania, ale z hantlami. Bardziej izolowane niż wyciskanie (trenuje głównie klatkę).",
         howTo: [
-            "Połóż się na plecach (na ławce, łóżku lub podłodze)",
-            "Weź hantle w obie ręce, unieś nad klatkę piersiową",
-            "Ręce lekko ugięte w łokciach (nie wyprostowane!)",
-            "POWOLI rozłóż ręce na boki (jak przytulanie w odwrotną stronę)",
-            "POWOLI złącz ręce z powrotem nad klatką"
+            "Pozycja startowa:",
+            "• Połóż się na plecach (na ławce, łóżku lub podłodze)",
+            "• Jeśli na podłodze, zegnij nogi w kolanach",
+            "• Weź hantle w obie ręce",
+            "• Unieś hantle nad klatkę piersiową",
+            "• Ręce lekko ugięte w łokciach (nie wyprostowane!)",
+            "• Dłonie skierowane do siebie",
+            "",
+            "Ruch na boki:",
+            "• POWOLI rozłóż ręce na boki",
+            "• Ruch jak przytulanie, ale w odwrotną stronę",
+            "• Opuszczaj do momentu, gdy poczujesz rozciąganie w klatce",
+            "• NIE opuszczaj zbyt nisko - zatrzymaj się gdy ramiona są równolegle do podłogi",
+            "",
+            "Ruch z powrotem:",
+            "• POWOLI złącz ręce z powrotem nad klatką",
+            "• Jakbyś przytulał dużą piłkę",
+            "• Wydech przy zamykaniu",
+            "",
+            "Powtórzenie: To jedno powtórzenie. Zrób 10-15 takich powtórzeń."
         ],
-        muscles: "Klatka piersiowa (główne), przednie części barków (pomocnicze)",
+        muscles: "Główne: Klatka piersiowa (mięśnie piersiowe). Pomocnicze: Przednie części barków",
         mistakes: [
             "Wyprostowane ręce (powinny być lekko ugięte!)",
-            "Opuszczanie zbyt nisko",
+            "Opuszczanie zbyt nisko (może uszkodzić barki)",
             "Zbyt szybkie ruchy",
             "Szarpanie"
         ],
-        notes: "Użyj lżejszych hantli niż przy wyciskaniu. Ręce ZAWSZE lekko ugięte!"
+        notes: "Użyj lżejszych hantli niż przy wyciskaniu (5-10kg łącznie). Ręce ZAWSZE lekko ugięte!"
     },
     "Biceps": {
         title: "UGINANIE RAMION Z HANTLAMI (BICEPS)",
