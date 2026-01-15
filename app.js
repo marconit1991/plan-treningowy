@@ -1060,6 +1060,20 @@ function toggleSection(sectionName) {
     }
 }
 
+function toggleSection(sectionName) {
+    const content = document.getElementById(sectionName + '-content');
+    const icon = document.getElementById(sectionName + '-icon');
+    if (content && icon) {
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            icon.textContent = '▲';
+        } else {
+            content.style.display = 'none';
+            icon.textContent = '▼';
+        }
+    }
+}
+
 function showCardioDetails() {
     const cardio = cardioDictionary["Cardio"];
     
